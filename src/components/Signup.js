@@ -23,7 +23,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Sneak-AR
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -31,13 +31,24 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    mode: "light",
+    background: {
+      paper: "#f54298",
+    },
+  },
+});
 
-export default function SignUp() {
+const SignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      company: data.get("company"),
+      addrress: data.get("address"),
       email: data.get("email"),
       password: data.get("password"),
     });
@@ -59,7 +70,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Become a seller
           </Typography>
           <Box
             component="form"
@@ -81,6 +92,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  color="primary"
                   required
                   fullWidth
                   id="lastName"
@@ -103,6 +115,26 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  id="Company"
+                  label="Company"
+                  name="company"
+                  autoComplete="Company"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="Address"
+                  label="Address"
+                  name="address"
+                  autoComplete="Address"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
                   type="password"
@@ -110,6 +142,7 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
@@ -140,4 +173,5 @@ export default function SignUp() {
       </Container>
     </ThemeProvider>
   );
-}
+};
+export default SignUp;
