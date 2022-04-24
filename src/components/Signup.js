@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import axios from "axios";
 function Copyright(props) {
   return (
     <Typography
@@ -44,13 +44,15 @@ const SignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      company: data.get("company"),
-      addrress: data.get("address"),
+    const newMan = {
+      name: data.get("firstName"),
+      comp: data.get("company"),
+      addr: data.get("address"),
       email: data.get("email"),
-      password: data.get("password"),
+      pass: data.get("password"),
+    };
+    axios.post("http://localhost:4000/manager/register", newMan).then((res) => {
+      console.log(res);
     });
   };
 
@@ -115,7 +117,7 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
-                  id="Company"
+                  id="company"
                   label="Company"
                   name="company"
                   autoComplete="Company"
