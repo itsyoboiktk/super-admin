@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -34,6 +35,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -55,9 +57,11 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <Avatar
+            alt="SneakerLogo"
+            src="../sneaklogo.png"
+            sx={{ width: 80, height: 80 }}
+          />{" "}
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -92,6 +96,7 @@ export default function SignIn() {
               label="Remember me"
             />
             <Button
+              onClick={() => navigate("/dashboard")}
               type="submit"
               fullWidth
               variant="contained"
@@ -106,7 +111,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

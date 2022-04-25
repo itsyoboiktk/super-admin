@@ -4,33 +4,16 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        SneakAR
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -40,7 +23,16 @@ const theme = createTheme({
   },
 });
 
-const SignUp = () => {
+const AddProduct = () => {
+  const [age, setAge] = React.useState("");
+  const [gender, setGender] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+  const handleChangeGender = (event) => {
+    setGender(event.target.value);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -77,7 +69,7 @@ const SignUp = () => {
             SneakAR
           </Typography>
           <Typography component="h1" variant="h6">
-            Become a seller
+            Add New Product
           </Typography>
           <Box
             component="form"
@@ -89,73 +81,81 @@ const SignUp = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="productName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="productName"
+                  label="Product Title"
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Category
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={age}
+                      label="Category"
+                      onChange={handleChange}
+                    >
+                      <MenuItem value="Sneaker">Sneaker</MenuItem>
+                      <MenuItem value="Causal">Casual</MenuItem>
+                      <MenuItem value="Formal">Formal</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <TextField
-                  color="primary"
+                  autoComplete="given-name"
+                  name="quantity"
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="quantity"
+                  label="Quantity"
+                  autoFocus
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">For</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={gender}
+                      label="For"
+                      onChange={handleChangeGender}
+                    >
+                      <MenuItem value="Men">Men</MenuItem>
+                      <MenuItem value="Women">Women</MenuItem>
+                      <MenuItem value="Unisex">Unisex</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="company"
-                  label="Company"
-                  name="company"
-                  autoComplete="Company"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="Address"
-                  label="Address"
-                  name="address"
-                  autoComplete="Address"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
+                  name="brand"
+                  label="Brand"
+                  id="brand"
                 />
               </Grid>
 
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                <TextField
+                  required
+                  fullWidth
+                  name="price"
+                  label="Price"
+                  id="price"
                 />
               </Grid>
             </Grid>
@@ -165,20 +165,12 @@ const SignUp = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Add Product
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
 };
-export default SignUp;
+export default AddProduct;
