@@ -36,14 +36,16 @@ const AddProduct = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const newMan = {
-      name: data.get("firstName"),
-      comp: data.get("company"),
-      addr: data.get("address"),
-      email: data.get("email"),
-      pass: data.get("password"),
+
+    const newPro = {
+      name: data.get("productName"),
+      quantity: data.get("quantity"),
+      brand: data.get("brand"),
+      price: data.get("price"),
+      category: age,
+      for: gender,
     };
-    axios.post("http://localhost:4000/manager/register", newMan).then((res) => {
+    axios.post("http://localhost:4000/product/add", newPro).then((res) => {
       console.log(res);
     });
   };
@@ -125,8 +127,8 @@ const AddProduct = () => {
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">For</InputLabel>
                     <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
+                      labelId="for"
+                      id="for"
                       value={gender}
                       label="For"
                       onChange={handleChangeGender}

@@ -9,21 +9,19 @@ import { useNavigate } from "react-router-dom";
 const MenuCard = (props) => {
   const navigate = useNavigate();
   return (
-    <Grid item xs={3}>
-      <Card
-        sx={{ minWidth: 255, cursor: "pointer" }}
-        onClick={() => navigate("/addProduct")}
-      >
-        <CardContent>
-          <CardActions>
-            {props.icon}
-            <Button size="large" onClick={() => navigate("/addProduct")}>
-              {props.option}
-            </Button>
-          </CardActions>
-        </CardContent>
-      </Card>
-    </Grid>
+    <Card
+      sx={{ minWidth: 255, cursor: "pointer" }}
+      onClick={() => navigate("/home/addProduct")}
+    >
+      <CardContent>
+        <CardActions>
+          {props.icon}
+          <Button size="large" onClick={() => navigate("/home/addProduct")}>
+            {props.option}
+          </Button>
+        </CardActions>
+      </CardContent>
+    </Card>
   );
 };
 export default MenuCard;

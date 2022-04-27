@@ -8,6 +8,7 @@ import SignUp from "./components/Signup";
 import SideBar from "./components/SideBar";
 import MenuCard from "./components/MenuCard";
 import Layout from "./components/Layout";
+import Overview from "./components/Overview";
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
 
         <Route path="/home" element={<Layout />}>
           <Route path="addProduct" element={<AddProduct />} />
-
+          <Route path="overview" element={<Overview />} />
           {/* <Route path="menu" element={<MenuCard />} /> */}
         </Route>
       </Routes>

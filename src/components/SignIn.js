@@ -96,7 +96,7 @@ export default function SignIn() {
               label="Remember me"
             />
             <Button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/home")}
               type="submit"
               fullWidth
               variant="contained"
