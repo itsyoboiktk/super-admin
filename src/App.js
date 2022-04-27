@@ -7,6 +7,7 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/Signup";
 import SideBar from "./components/SideBar";
 import MenuCard from "./components/MenuCard";
+import Layout from "./components/Layout";
 
 const App = () => {
   return (
@@ -16,7 +17,7 @@ const App = () => {
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
 
-        <Route path="/dashboard" element={<SideBar />}>
+        <Route path="/home" element={<Layout />}>
           <Route path="addProduct" element={<AddProduct />} />
 
           {/* <Route path="menu" element={<MenuCard />} /> */}
