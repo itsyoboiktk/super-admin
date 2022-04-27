@@ -23,6 +23,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PageviewIcon from "@mui/icons-material/Pageview";
 import AssessmentIcon from "@mui/icons-material/Assessment";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -187,10 +188,10 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Grid container rowSpacing={2} columnSpacing={2} direction="row">
-          <MenuCard icon={<AddCircleIcon />} option="Add product" />
-          <MenuCard icon={<DeleteIcon />} option="Delete product" />
+          {/*<MenuCard icon={<DeleteIcon />} option="Delete product" />
           <MenuCard icon={<PageviewIcon />} option="View products" />
-          <MenuCard icon={<AssessmentIcon />} option="View Reports" />
+          <MenuCard icon={<AssessmentIcon />} option="View Reports" /> */}
+          <Outlet />
         </Grid>
       </Box>
     </Box>

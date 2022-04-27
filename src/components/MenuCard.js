@@ -10,7 +10,10 @@ const MenuCard = (props) => {
   const navigate = useNavigate();
   return (
     <Grid item xs={3}>
-      <Card sx={{ minWidth: 255 }}>
+      <Card
+        sx={{ minWidth: 255, cursor: "pointer" }}
+        onClick={() => navigate("/addProduct")}
+      >
         <CardContent>
           <CardActions>
             {props.icon}

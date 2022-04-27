@@ -1,0 +1,65 @@
+
+.Container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.Container .Nav{
+    flex:20%;
+    width: 100%;
+}
+.Container .below-Nav{
+    flex: 80%;
+    display: flex;
+    flex-direction: row;
+    background-color: red;
+    
+}
+.below-Nav .SideBar{
+    flex:15%;
+    height: 100vh;
+    background-color: #363740
+}
+.below-Nav .Content{
+    flex: 85%;
+    height: 100vh;
+    overflow: scroll;
+    
+}
+.Row{
+width: 100%;
+height: 50px;
+color: #DDE2FF;
+list-style-type: none;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.list{
+    width: 100%;
+    height: auto;
+    padding: 0;
+}
+.Row #icon{
+flex: 30%;
+display: grid;
+place-items: center;
+
+}
+.Row #title{
+    flex: 70%;}
+
+.Row:hover{
+    
+    cursor: pointer;
+    background-color: #45464c;
+}
+.list #active{
+    background-color: #45464c;
+    border-left:1px solid #DDE2FF;
+}
