@@ -6,13 +6,13 @@ import Nav from "./Nav";
 const Layout = () => {
   return (
     <div className="Container">
-      <div className="SideBar">
-        <SideBar />
+      <div className="Nav">
+        <Nav />
       </div>
 
       <div className="Content">
-        <div className="Nav">
-          <Nav />
+        <div className="SideBar">
+          <SideBar />
         </div>
 
         <div className="Outlet">

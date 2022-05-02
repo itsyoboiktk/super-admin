@@ -1,46 +1,48 @@
-
 .Container{
     height: 100vh;
     width: 100vw;
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
-}
-.Container .SideBar{
-    flex:15%;
-    height: auto;
-    background-color: #363740
-}
-
-.Container .Content{
-    flex: 85%;
+    overflow-x:hidden;
     display: flex;
     flex-direction: column;
-       
+}
+.Container .Nav{
+    flex:10%;
+     position: sticky;
+     position: -webkit-sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    border: 1px solid black
+    
+}
+.Container .Content{
+    overflow-y: hidden;
+    flex:90%;
+    display: flex;
+    
+}
+.Content .SideBar{
+    border: 1px solid black;
+    flex:15%;
+    height: auto;
+}
+.Content .Outlet{
+    overflow-y: auto;
+    flex: 85%;
 }
 
-.Content .Outlet{
-    flex: 90%;
-    overflow-y: scroll;
-}
-.Content .Nav{
-    flex:10%;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
+
 .Row{
 width: 100%;
-height: 50px;
-color: #DDE2FF;
+height: 40px;
+
 list-style-type: none;
 display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: center;
 
-font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;}
 .list{
     width: 100%;
     height: auto;
@@ -58,9 +60,11 @@ place-items: center;
 .Row:hover{
     
     cursor: pointer;
-    background-color: #45464c;
+    
+    background-color: #767779;
 }
 .list #active{
-    background-color: #45464c;
-    border-left:1px solid #DDE2FF;
+    background-color: #767779;
+    
+    border-left:1px solid #1a1c20;
 }

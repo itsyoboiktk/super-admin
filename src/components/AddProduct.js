@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,6 +12,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const theme = createTheme({
   palette: {
@@ -24,6 +24,7 @@ const theme = createTheme({
 });
 
 const AddProduct = () => {
+  const navigate = useNavigate();
   const [age, setAge] = React.useState("");
   const [gender, setGender] = React.useState("");
 
@@ -45,9 +46,8 @@ const AddProduct = () => {
       category: age,
       for: gender,
     };
-    axios.post("http://localhost:4000/product/add", newPro).then((res) => {
-      console.log(res);
-    });
+    navigate("/home/addImages", { state: { newPro } });
+   
   };
 
   return (
@@ -161,11 +161,18 @@ const AddProduct = () => {
                 />
               </Grid>
             </Grid>
+
             <Button
-              type="submit"
+              type="Proceed"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              style={{
+                backgroundColor: "#45464c",
+                textTransform: "capitalize",
+                fontfamily:
+                  "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
+              }}
             >
               Add Product
             </Button>

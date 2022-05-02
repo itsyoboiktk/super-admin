@@ -4,16 +4,21 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-
+    
 }
 .overview .card{
+    border: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* border: 1px solid red;
     flex: 20%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     margin-top: 10px;
-    border: none;
+    border: none; */
 }
 .overview .chart{
     flex: 80%;

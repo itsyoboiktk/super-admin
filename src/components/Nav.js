@@ -7,16 +7,12 @@ const Nav = () => {
   return (
     <div className="navbar">
       <div id="text">
-        <Avatar
-          alt="SneakerLogo"
-          src="../sneaklogo.png"
-          //   sx={{ width: 80, height: 80 }}
-        />{" "}
+        <Avatar alt="SneakerLogo" src="../sneaklogo.png" />
         <p>SneakAR</p>
       </div>
       <div id="icon">
-        <NotificationsIcon color="info" />
-        <SettingsIcon color="info" />
+        <NotificationsIcon style={{ color: "#45464c" }} />
+        <SettingsIcon style={{ color: "#45464c" }} />
       </div>
     </div>
   );

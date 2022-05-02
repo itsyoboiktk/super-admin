@@ -15,7 +15,7 @@ const Overview = () => {
         <MenuCard icon={<DeleteIcon />} option="5 removed" />
         <MenuCard icon={<AddCircleIcon />} option="10 new added" />
       </div>
-      <Divider variant="middle" />
+
       <div className="chart"></div>
     </div>
   );
