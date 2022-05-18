@@ -2,14 +2,13 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./addImages.css";
-import imageToBase64 from "image-to-base64/browser";
 import axios from "axios";
 const AddImages = () => {
   const location = useLocation();
   const data = location.state.newPro;
 
   const [selectedImages, setSelectedImages] = useState([]);
-  const [baseImages, setBaseImages] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
   const onSelectFile = (event) => {
     const selectedFiles = event.target.files;
     const selectedFilesArray = Array.from(selectedFiles);
@@ -19,29 +18,16 @@ const AddImages = () => {
     });
 
     setSelectedImages((previousImages) => previousImages.concat(imagesArray));
-  };
-
-  const imgUpload = () => {
-    let convertedImg = [];
-    selectedImages.map((image, index) => {
-      imageToBase64(image) // Image URL
-        .then((response) => {
-          convertedImg.push(response);
-        })
-        .catch((error) => {
-          console.log(error); // Logs an error if there was one
-        });
-    });
-    setBaseImages(convertedImg);
-    saveToDb();
+    console.log(selectedImages);
   };
 
   const saveToDb = () => {
-    data.img = baseImages;
-    console.log(data);
-    axios.post("http://localhost:4000/product/add", data).then((res) => {
-      console.log(res);
-    });
+    const formData = new FormData();
+    formData.append("images", selectedImages[0]);
+    console.log(formData);
+    // axios.post("http://localhost:4000/product/..", formData).then((res) => {
+    //   console.log(res);
+    // });
   };
 
   return (
@@ -69,7 +55,7 @@ const AddImages = () => {
             </span>
           </p>
         ) : (
-          <button className="upload-btn" onClick={() => imgUpload()}>
+          <button className="upload-btn" onClick={() => saveToDb()}>
             UPLOAD {selectedImages.length} IMAGE
             {selectedImages.length === 1 ? "" : "S"}
           </button>

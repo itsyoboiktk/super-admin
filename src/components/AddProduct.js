@@ -27,6 +27,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
   const [age, setAge] = React.useState("");
   const [gender, setGender] = React.useState("");
+  // const [images, setImages] = React.useState([]);
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -34,22 +35,23 @@ const AddProduct = () => {
   const handleChangeGender = (event) => {
     setGender(event.target.value);
   };
+
+  // const onSelectFile = (event) => {
+  //   const selectedFiles = event.target.files;
+  //   const selectedFilesArray = Array.from(selectedFiles);
+  //   setImages(selectedFilesArray);
+  // };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    const newPro = {
-      name: data.get("productName"),
-      quantity: data.get("quantity"),
-      brand: data.get("brand"),
-      price: data.get("price"),
-      category: age,
-      for: gender,
-    };
-    navigate("/home/addImages", { state: { newPro } });
-   
+    sendData(data);
   };
 
+  const sendData = (data) => {
+    axios.post("http://localhost:4000/product/upload", data).then((res) => {
+      console.log(res);
+    });
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -103,6 +105,7 @@ const AddProduct = () => {
                       value={age}
                       label="Category"
                       onChange={handleChange}
+                      name="category"
                     >
                       <MenuItem value="Sneaker">Sneaker</MenuItem>
                       <MenuItem value="Causal">Casual</MenuItem>
@@ -131,6 +134,7 @@ const AddProduct = () => {
                       id="for"
                       value={gender}
                       label="For"
+                      name="gender"
                       onChange={handleChangeGender}
                     >
                       <MenuItem value="Men">Men</MenuItem>
@@ -159,6 +163,19 @@ const AddProduct = () => {
                   label="Price"
                   id="price"
                 />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button variant="contained" component="label">
+                  Upload File
+                  <input
+                    type="file"
+                    name="images"
+                    hidden
+                    multiple
+                    accept="image/png , image/jpeg"
+                  />
+                </Button>
               </Grid>
             </Grid>
 

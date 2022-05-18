@@ -8,6 +8,8 @@ import SignUp from "./components/Signup";
 import Layout from "./components/Layout";
 import Overview from "./components/Overview";
 import AddImages from "./components/AddImages";
+import ImageCheck from "./components/ImageCheck";
+import Inventory from "./components/Inventory";
 const App = () => {
   return (
     <Router>
@@ -19,7 +21,7 @@ const App = () => {
         <Route path="/home" element={<Layout />}>
           <Route path="" element={<Overview />} />
           <Route path="overview" element={<Overview />} />
-
+          <Route path="inventory" element={<Inventory />} />
           <Route path="addProduct" element={<AddProduct />} />
           <Route path="addImages" element={<AddImages />} />
 

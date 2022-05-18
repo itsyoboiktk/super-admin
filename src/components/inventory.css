@@ -1,0 +1,16 @@
+.invent{
+display: flex;
+flex-direction: column;
+}
+.invent .search_bar{
+    flex:20%;
+    border: 1px solid red;
+}
+.invent .items{
+    flex: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid blue;
+    /* border: 1px solid blue */
+}
