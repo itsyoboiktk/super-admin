@@ -85,7 +85,7 @@ const AddProduct = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="productName"
+                  name="title"
                   required
                   fullWidth
                   id="productName"
