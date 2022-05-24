@@ -41,7 +41,7 @@ const Inventory = () => {
     bgcolor: "white",
     border: "1px solid",
     borderRadius: "10px",
-    boxShadow: 24,
+    boxShadow: 25,
     p: 4,
   };
   React.useEffect(() => {
