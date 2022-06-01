@@ -8,11 +8,15 @@ const Nav = () => {
     <div className="navbar">
       <div id="text">
         <Avatar alt="SneakerLogo" src="../sneaklogo.png" />
-        <p>SneakAR</p>
+        <h4 style={{ color: "white", fontWeight: "600" }}>SneakAR</h4>
       </div>
       <div id="icon">
-        <NotificationsIcon style={{ color: "#45464c" }} />
-        <SettingsIcon style={{ color: "#45464c" }} />
+        <NotificationsIcon
+          style={{ color: "#dbeaf1", margin: "5px", cursor: "pointer" }}
+        />
+        <SettingsIcon
+          style={{ color: "#dbeaf1", margin: "5px", cursor: "pointer" }}
+        />
       </div>
     </div>
   );

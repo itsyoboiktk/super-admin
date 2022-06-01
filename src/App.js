@@ -8,12 +8,12 @@ import SignUp from "./components/Signup";
 import Layout from "./components/Layout";
 import Overview from "./components/Overview";
 import AddImages from "./components/AddImages";
-import ImageCheck from "./components/ImageCheck";
+// import ImageCheck from "./components/ImageCheck";
 import Inventory from "./components/Inventory";
+import ProductView from "./components/ProductView";
 const App = () => {
   return (
     <Router>
-      {/* <SideBar /> */}
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -24,8 +24,7 @@ const App = () => {
           <Route path="inventory" element={<Inventory />} />
           <Route path="addProduct" element={<AddProduct />} />
           <Route path="addImages" element={<AddImages />} />
-
-          {/* <Route path="menu" element={<MenuCard />} /> */}
+          <Route path="productView" element={<ProductView />} />
         </Route>
       </Routes>
     </Router>

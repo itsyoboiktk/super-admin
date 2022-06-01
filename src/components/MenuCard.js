@@ -14,6 +14,8 @@ const MenuCard = (props) => {
         cursor: "pointer",
         flex: "1 1 150px",
         margin: "10px",
+        borderRadius: "10px",
+        backgroundColor: props.color,
       }}
       onClick={() => navigate("/home/addProduct")}
     >
@@ -26,8 +28,7 @@ const MenuCard = (props) => {
             style={{
               color: "#45464c",
               textTransform: "capitalize",
-              fontfamily:
-                "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
+              fontWeight: "700",
             }}
           >
             {props.option}

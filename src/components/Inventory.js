@@ -7,11 +7,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-
 import Typography from "@mui/material/Typography";
-import { TextField } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import { useNavigate } from "react-router-dom";
+import { TextField } from "@mui/material";
+
 const Inventory = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [id, setId] = React.useState("");
@@ -23,7 +25,11 @@ const Inventory = () => {
 
   const deleteProduct = () => {
     axios
-      .delete(`http://localhost:4000/product/delete/${id}`)
+      .delete(`http://localhost:4000/product/delete/${id}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         console.log("here", res);
         setOpen(false);
@@ -46,7 +52,11 @@ const Inventory = () => {
   };
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/product/display")
+      .get("http://localhost:4000/product/display", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         setProducts(res.data);
         console.log(res);
@@ -67,7 +77,7 @@ const Inventory = () => {
               <CardMedia
                 component="img"
                 height="140"
-                image={`http://localhost:4000/${element.path[0]}`}
+                image={`http://localhost:4000/${element.path[1]}`}
                 alt="product image"
               />
               <CardContent>
@@ -82,7 +92,16 @@ const Inventory = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">View</Button>
+                <Button
+                  size="small"
+                  onClick={() =>
+                    navigate("/home/productView", {
+                      state: { product: element },
+                    })
+                  }
+                >
+                  View
+                </Button>
                 <Button size="small">Edit</Button>
                 <Button size="small" onClick={() => handleOpen(element._id)}>
                   Delete
@@ -104,7 +123,7 @@ const Inventory = () => {
           </Typography>
           <div style={{ flexDirection: "row" }}>
             <Button onClick={() => deleteProduct()}>Yes</Button>
-            <Button>No</Button>
+            <Button onClick={() => handleClose()}>No</Button>
           </div>
         </Box>
       </Modal>

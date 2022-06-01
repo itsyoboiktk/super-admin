@@ -13,7 +13,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import Modal from "@mui/material/Modal";
 import axios from "axios";
+
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -28,30 +30,54 @@ const AddProduct = () => {
   const [age, setAge] = React.useState("");
   const [gender, setGender] = React.useState("");
   // const [images, setImages] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    navigate("/home/inventory");
+  };
   const handleChange = (event) => {
     setAge(event.target.value);
   };
   const handleChangeGender = (event) => {
     setGender(event.target.value);
   };
-
-  // const onSelectFile = (event) => {
-  //   const selectedFiles = event.target.files;
-  //   const selectedFilesArray = Array.from(selectedFiles);
-  //   setImages(selectedFilesArray);
-  // };
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("here");
     const data = new FormData(event.currentTarget);
     sendData(data);
   };
 
   const sendData = (data) => {
-    axios.post("http://localhost:4000/product/upload", data).then((res) => {
-      console.log(res);
-    });
+    console.log(data.get("title"));
+    axios
+      .post("http://localhost:4000/product/upload", data, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        handleOpen();
+      });
   };
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "white",
+    border: "1px solid",
+    borderRadius: "10px",
+    boxShadow: 25,
+    p: 4,
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -195,6 +221,18 @@ const AddProduct = () => {
             </Button>
           </Box>
         </Box>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Product successfully added!
+            </Typography>
+          </Box>
+        </Modal>
       </Container>
     </ThemeProvider>
   );

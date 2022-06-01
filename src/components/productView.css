@@ -1,0 +1,39 @@
+
+.product_container{
+    display: flex;
+
+    height: 100%;
+    padding: 0;
+}
+.product_card{
+    height: 100%;
+    width: auto;
+    margin: 2px;
+    display: flex;
+   margin: 5px;
+   border-radius: 10px;
+    }
+.product_card .slider{
+    display: flex;
+    width: 80%;
+    height: 20%;
+    
+}
+.btn{
+    
+    margin: 5px;
+}
+.desc{
+    width:50%;
+  margin: 5px;
+   padding: 10px;
+
+}
+.desc >p{
+    margin: 1px;
+    
+}
+.desc >h4{
+    margin-top: 10px;
+    
+}

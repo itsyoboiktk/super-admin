@@ -7,12 +7,12 @@
 }
 .Container .Nav{
     flex:10%;
+    
      position: sticky;
      position: -webkit-sticky;
     top: 0;
     width: 100%;
     z-index: 1;
-    border: 1px solid black
     
 }
 .Container .Content{
@@ -22,7 +22,8 @@
     
 }
 .Content .SideBar{
-    border: 1px solid black;
+    
+    background-color: #232323;
     flex:15%;
     height: auto;
 }
@@ -35,7 +36,7 @@
 .Row{
 width: 100%;
 height: 40px;
-
+color: #A1A1A1;
 list-style-type: none;
 display: flex;
 flex-direction: row;
@@ -61,10 +62,12 @@ place-items: center;
     
     cursor: pointer;
     
-    background-color: #767779;
+    color:white
 }
 .list #active{
-    background-color: #767779;
+    color:white;
     
-    border-left:1px solid #1a1c20;
+    border-left:1px solid white;
+    background-color: #2989b6
+    
 }
