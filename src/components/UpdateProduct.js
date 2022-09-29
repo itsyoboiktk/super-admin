@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 
@@ -25,11 +25,17 @@ const theme = createTheme({
   },
 });
 
-const AddProduct = () => {
+const UpdateProduct = () => {
+  const { state } = useLocation();
   const navigate = useNavigate();
-  const [age, setAge] = React.useState("");
-  const [gender, setGender] = React.useState("");
-  // const [images, setImages] = React.useState([]);
+  const product = state.product;
+
+  const [age, setAge] = React.useState(product.category);
+  const [gender, setGender] = React.useState(product.gender);
+  const [title, setTitle] = React.useState(product.title);
+  const [price, setPrice] = React.useState(product.price);
+  const [brand, setBrand] = React.useState(product.brand);
+  const [quantity, setQuantity] = React.useState(product.quantity);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -45,21 +51,40 @@ const AddProduct = () => {
   const handleChangeGender = (event) => {
     setGender(event.target.value);
   };
+  const handleChangeTitle = (event) => {
+    setTitle(event.target.value);
+  };
+  const handleChangePrice = (event) => {
+    setPrice(event.target.value);
+  };
+  const handleChangeBrand = (event) => {
+    setBrand(event.target.value);
+  };
+  const handleChangeQuantity = (event) => {
+    setQuantity(event.target.value);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("here");
+
     const data = new FormData(event.currentTarget);
-    console.log(data);
-    sendData(data);
+    const updated = {
+      _id: product._id,
+      title: data.get("title"),
+      category: data.get("category"),
+      gender: data.get("gender"),
+      price: data.get("price"),
+      brand: data.get("brand"),
+      quantity: data.get("quantity"),
+    };
+    sendData(updated);
   };
 
   const sendData = (data) => {
-    console.log(data.get("title"));
     axios
-      .post("http://localhost:4000/product/upload", data, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
+      .put("http://localhost:4000/product/update", data, {
+        // headers: {
+        //   Authorization: localStorage.getItem("token"),
+        // },
       })
       .then((res) => {
         console.log(res);
@@ -118,6 +143,8 @@ const AddProduct = () => {
                   id="productName"
                   label="Product Title"
                   autoFocus
+                  value={title}
+                  onChange={handleChangeTitle}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -149,6 +176,8 @@ const AddProduct = () => {
                   fullWidth
                   id="quantity"
                   label="Quantity"
+                  value={quantity}
+                  onChange={handleChangeQuantity}
                   autoFocus
                 />
               </Grid>
@@ -179,6 +208,8 @@ const AddProduct = () => {
                   name="brand"
                   label="Brand"
                   id="brand"
+                  value={brand}
+                  onChange={handleChangeBrand}
                 />
               </Grid>
 
@@ -189,6 +220,8 @@ const AddProduct = () => {
                   name="price"
                   label="Price"
                   id="price"
+                  value={price}
+                  onChange={handleChangePrice}
                 />
               </Grid>
 
@@ -230,7 +263,7 @@ const AddProduct = () => {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Product successfully added!
+              Product successfully updated
             </Typography>
           </Box>
         </Modal>
@@ -238,4 +271,4 @@ const AddProduct = () => {
     </ThemeProvider>
   );
 };
-export default AddProduct;
+export default UpdateProduct;

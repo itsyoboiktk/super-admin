@@ -77,7 +77,7 @@ const Inventory = () => {
               <CardMedia
                 component="img"
                 height="140"
-                image={`http://localhost:4000/${element.path[1]}`}
+                image={`http://localhost:4000/${element.path[0]}`}
                 alt="product image"
               />
               <CardContent>
@@ -102,7 +102,16 @@ const Inventory = () => {
                 >
                   View
                 </Button>
-                <Button size="small">Edit</Button>
+                <Button
+                  size="small"
+                  onClick={() =>
+                    navigate("/home/updateProduct", {
+                      state: { product: element },
+                    })
+                  }
+                >
+                  Edit
+                </Button>
                 <Button size="small" onClick={() => handleOpen(element._id)}>
                   Delete
                 </Button>

@@ -9,6 +9,7 @@ import Layout from "./components/Layout";
 import Overview from "./components/Overview";
 import AddImages from "./components/AddImages";
 // import ImageCheck from "./components/ImageCheck";
+import UpdateProduct from "./components/UpdateProduct";
 import Inventory from "./components/Inventory";
 import ProductView from "./components/ProductView";
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="addProduct" element={<AddProduct />} />
           <Route path="addImages" element={<AddImages />} />
           <Route path="productView" element={<ProductView />} />
+          <Route path="updateProduct" element={<UpdateProduct />} />
         </Route>
       </Routes>
     </Router>

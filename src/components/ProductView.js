@@ -1,6 +1,7 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import "./productView.css";
+
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -26,6 +27,7 @@ const ProductView = () => {
     p: 4,
   };
   const { state } = useLocation();
+  const navigate = useNavigate();
   const product = state.product;
   const [open, setOpen] = React.useState(false);
 
@@ -42,6 +44,7 @@ const ProductView = () => {
 
   const pressLeft = () => {
     if (imgNum == 0) {
+      setImgNum(img.length - 1);
     } else {
       setImgNum(imgNum - 1);
     }
@@ -52,12 +55,13 @@ const ProductView = () => {
     if (imgNum < img.length - 1) {
       setImgNum(imgNum + 1);
     } else {
+      setImgNum(0);
     }
     console.log(imgNum);
   };
   const deleteProduct = () => {
     axios
-      .delete(`http://localhost:4000/product/delete/${product.id}`, {
+      .delete(`http://localhost:4000/product/delete/${product._id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -65,6 +69,7 @@ const ProductView = () => {
       .then((res) => {
         console.log("here", res);
         setOpen(false);
+        navigate("/home/inventory");
       })
       .catch((err) => {
         console.log(err);
