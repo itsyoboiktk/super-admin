@@ -69,7 +69,6 @@ const AddProduct = () => {
       setSizes(newArr);
       console.log(sizes);
     } else {
-      alert(event);
       let newArr = sizes;
       let i = newArr.indexOf(event);
       newArr.splice(i, 1);
