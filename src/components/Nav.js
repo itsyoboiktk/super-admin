@@ -1,5 +1,5 @@
 import React from "react";
-import "./Nav.css";
+import "./nav.css";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Avatar from "@mui/material/Avatar";
