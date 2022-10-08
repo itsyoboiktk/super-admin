@@ -73,7 +73,7 @@ const AddProduct = () => {
       let i = newArr.indexOf(event);
       newArr.splice(i, 1);
       setSizes(newArr);
-      console.log(sizes);
+      console.log("hello", sizes);
     }
   };
   const handleSubmit = (event) => {
