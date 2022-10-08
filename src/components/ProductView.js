@@ -1,8 +1,8 @@
 import React from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./productView.css";
 
-import { Button } from "@mui/material";
+import { Button, Grid, Divider, Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -30,13 +30,32 @@ const ProductView = () => {
   const navigate = useNavigate();
   const product = state.product;
   const [open, setOpen] = React.useState(false);
+  const [reviews, setReviews] = React.useState([]);
+  const [open2, setOpen2] = React.useState(false);
+
+  const [img, setImg] = React.useState([]);
+  const handleOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => setOpen2(false);
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
 
-  const [img, setImg] = React.useState([]);
+  const reviewClicked = () => {
+    axios
+      .get(`http://localhost:4000/review/get/${product._id}`)
+      .then((res) => {
+        setReviews(res.data);
+        handleOpen2();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   React.useEffect(() => {
     setImg(product.path);
   }, []);
@@ -77,6 +96,87 @@ const ProductView = () => {
   };
   return (
     <div className="product_container">
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className="Modal_Rev">
+          <Box
+            sx={{
+              position: "absolute",
+              top: "40%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "80%",
+              bgcolor: "white",
+              border: "1px solid",
+              borderRadius: "10px",
+              // p: 5,
+            }}
+          >
+            {reviews.length >= 1 ? (
+              reviews.map((ele) => (
+                <Paper
+                  style={{
+                    padding: "40px 20px",
+                    maxHeight: 400,
+                    overflow: "auto",
+                  }}
+                >
+                  <Grid container wrap="nowrap" spacing={2}>
+                    <Grid justifyContent="left" item xs zeroMinWidth>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <h4 style={{ margin: 0, textAlign: "left" }}>
+                          {ele.user.name}
+                        </h4>
+                        <Rating
+                          name="half-rating"
+                          defaultValue={ele.rating}
+                          disabled
+                          size="large"
+                        />
+                      </div>
+                      <p style={{ textAlign: "left" }}>{ele.comment}</p>
+                    </Grid>
+                  </Grid>
+                  <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+                </Paper>
+              ))
+            ) : (
+              <Paper
+                style={{
+                  padding: "40px 20px",
+                  maxHeight: 400,
+
+                  overflow: "auto",
+                }}
+              >
+                <Grid
+                  container
+                  wrap="nowrap"
+                  spacing={2}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <h3>No reviews yet!</h3>
+                </Grid>
+              </Paper>
+            )}
+          </Box>
+        </div>
+      </Modal>
+
       <div className="product_card">
         <div className="slider">
           <button className="btn" onClick={() => pressLeft()}>
@@ -143,6 +243,7 @@ const ProductView = () => {
             Update
           </Button>
           <Button
+            onClick={() => reviewClicked()}
             style={{ marginBottom: "10px" }}
             variant="outlined"
             startIcon={<ReviewsIcon />}

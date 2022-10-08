@@ -15,6 +15,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { eventWrapper } from "@testing-library/user-event/dist/utils";
 
 const theme = createTheme({
   palette: {
@@ -29,7 +32,21 @@ const AddProduct = () => {
   const navigate = useNavigate();
   const [age, setAge] = React.useState("");
   const [gender, setGender] = React.useState("");
-  // const [images, setImages] = React.useState([]);
+  const [sizes, setSizes] = React.useState([]);
+  const [sizeOptions, setOptionSizes] = React.useState([
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "41",
+    "42",
+    "43",
+    "44",
+    "45",
+  ]);
+
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -44,6 +61,21 @@ const AddProduct = () => {
   };
   const handleChangeGender = (event) => {
     setGender(event.target.value);
+  };
+  const handleChangeSize = (event, state) => {
+    if (state) {
+      let newArr = sizes;
+      newArr.push(event);
+      setSizes(newArr);
+      console.log(sizes);
+    } else {
+      alert(event);
+      let newArr = sizes;
+      let i = newArr.indexOf(event);
+      newArr.splice(i, 1);
+      setSizes(newArr);
+      console.log(sizes);
+    }
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -171,7 +203,41 @@ const AddProduct = () => {
                   </FormControl>
                 </Box>
               </Grid>
-
+              <Grid item xs={12} sm={6}>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <div>
+                      <InputLabel id="demo-simple-select-label">
+                        Sizes:
+                      </InputLabel>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        width: "200%",
+                        marginLeft: 70,
+                      }}
+                    >
+                      {sizeOptions.map((v, i) => (
+                        <FormControlLabel
+                          value="top"
+                          control={
+                            <Checkbox
+                              onChange={(event) =>
+                                handleChangeSize(v, event.target.checked)
+                              }
+                            />
+                          }
+                          label={v}
+                          labelPlacement="start"
+                        />
+                      ))}
+                    </div>
+                  </FormControl>
+                </Box>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required

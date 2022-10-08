@@ -28,7 +28,7 @@ const Overview = () => {
         />
         <MenuCard
           icon={<LocalAtmOutlinedIcon fontSize="large" />}
-          option="Total Profit: Rs.245,785"
+          option={"Total Products: Rs.245,785"}
           color="#e3f49a"
         />
         <MenuCard

@@ -15,7 +15,7 @@ export const SideBarData = [
   {
     title: "Orders",
     icon: <ReceiptIcon />,
-    link: "home/orders",
+    link: "/home/orders",
   },
   {
     title: "Inventory",

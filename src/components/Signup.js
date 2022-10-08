@@ -51,7 +51,7 @@ const SignUp = () => {
       email: data.get("email"),
       pass: data.get("password"),
     };
-    axios.post("http://localhost:4000/manager/register", newMan).then((res) => {
+    axios.post("http://localhost:6000/manager/register", newMan).then((res) => {
       console.log(res);
     });
   };

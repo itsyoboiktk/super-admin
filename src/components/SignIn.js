@@ -54,6 +54,7 @@ export default function SignIn() {
   };
 
   const checkAuth = (data) => {
+    console.log("here");
     axios
       .post("http://localhost:4000/manager/login", data)
       .then((result) => {

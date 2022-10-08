@@ -12,6 +12,7 @@ import AddImages from "./components/AddImages";
 import UpdateProduct from "./components/UpdateProduct";
 import Inventory from "./components/Inventory";
 import ProductView from "./components/ProductView";
+import Orders from "./components/Orders";
 const App = () => {
   return (
     <Router>
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="addImages" element={<AddImages />} />
           <Route path="productView" element={<ProductView />} />
           <Route path="updateProduct" element={<UpdateProduct />} />
+          <Route path="orders" element={<Orders />} />
         </Route>
       </Routes>
     </Router>
