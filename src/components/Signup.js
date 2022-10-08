@@ -47,11 +47,18 @@ const SignUp = () => {
     const newMan = {
       name: data.get("firstName"),
       comp: data.get("company"),
-      addr: data.get("address"),
       email: data.get("email"),
       pass: data.get("password"),
+      house: data.get("house"),
+      street: data.get("street"),
+      sector: data.get("sector"),
+      city: data.get("city"),
+      postal: data.get("postal"),
+      region: data.get("region"),
+      phone: data.get("phone"),
+      country: "Pakistan",
     };
-    axios.post("http://localhost:6000/manager/register", newMan).then((res) => {
+    axios.post("http://localhost:4000/manager/register", newMan).then((res) => {
       console.log(res);
     });
   };
@@ -122,22 +129,83 @@ const SignUp = () => {
                 <TextField
                   required
                   fullWidth
-                  id="company"
-                  label="Company"
-                  name="company"
-                  autoComplete="Company"
+                  id="phone"
+                  label="Phone Number"
+                  name="phone"
+                  autoComplete="phone"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="Address"
-                  label="Address"
-                  name="address"
-                  autoComplete="Address"
+                  id="company"
+                  label="Company"
+                  name="company"
+                  autoComplete="Company"
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="House"
+                  label="House"
+                  name="house"
+                  autoComplete="House"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="Street"
+                  label="Street"
+                  name="street"
+                  autoComplete="Street"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="Sector"
+                  label="Sector"
+                  name="sector"
+                  autoComplete="Stector"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="City"
+                  label="City"
+                  name="city"
+                  autoComplete="City"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="Postal"
+                  label="Postal Code"
+                  name="postal"
+                  autoComplete="Postal"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="Region"
+                  label="Region"
+                  name="region"
+                  autoComplete="Region"
+                />
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required

@@ -81,7 +81,8 @@ const AddProduct = () => {
     console.log("here");
     const data = new FormData(event.currentTarget);
     console.log(data);
-    sendData(data);
+    data.sizes = sizes;
+    sendData(data.sizes);
   };
 
   const sendData = (data) => {
@@ -202,9 +203,9 @@ const AddProduct = () => {
                   </FormControl>
                 </Box>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={8}>
                 <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
+                  <FormControl>
                     <div>
                       <InputLabel id="demo-simple-select-label">
                         Sizes:
@@ -215,7 +216,7 @@ const AddProduct = () => {
                         display: "flex",
                         flexDirection: "row",
                         flexWrap: "wrap",
-                        width: "200%",
+                        width: "150%",
                         marginLeft: 70,
                       }}
                     >
@@ -237,7 +238,7 @@ const AddProduct = () => {
                   </FormControl>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -247,13 +248,26 @@ const AddProduct = () => {
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
                   name="price"
                   label="Price"
                   id="price"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="description"
+                  multiline
+                  minRows={3}
+                  required
+                  fullWidth
+                  id="description"
+                  label="Product Description"
+                  placeholder="Product Description"
+                  autoFocus
                 />
               </Grid>
 
