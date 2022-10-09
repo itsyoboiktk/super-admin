@@ -1,4 +1,7 @@
+/* eslint-disable no-undef */
+
 import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { useTheme, styled } from "@mui/material/styles";
@@ -11,9 +14,11 @@ import {
   TableFooter,
   Grid,
   Paper,
+  Typography,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
 
 import TablePagination from "@mui/material/TablePagination";
 import axios from "axios";
@@ -22,6 +27,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+// import order from "../../../fyp-backend/models/order";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -95,23 +101,47 @@ TablePaginationActions.propTypes = {
 function OrderTable() {
   const [orders, setOrders] = React.useState([]);
   const [ordersD, setOrdersD] = React.useState([]);
+  const [orderID, setOrderID] = React.useState();
 
   const [open2, setOpen2] = React.useState(false);
 
-  const handleOpen2 = (val) => {
+  const handleOpen2 = (val, idO) => {
     setOrdersD(val);
+    setOrderID(idO);
     setOpen2(true);
   };
+  console.log(orderID);
   const handleClose2 = () => setOpen2(false);
+
+  const updateStatus = (val) => {
+    console.log("Hello in update", val);
+
+    const updated = {
+      id: val,
+      status: "COMPLETED",
+    };
+    console.log(updated);
+    sendData(updated);
+  };
+
+  const sendData = (data) => {
+    axios
+      .put("http://localhost:4000/order/update", data, {
+        // headers: {
+        //   Authorization: localStorage.getItem("token"),
+        // },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+  const sID = "6341e29d65f5afd41390c047";
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/order/display")
+      .get(`http://localhost:4000/order/display/${sID}`)
       .then((res) => {
         console.log(res.data);
         setOrders(res.data);
-        setOrdersD(res.data[0].items);
-        console.log(res.data[0].items);
-        console.log("hello", ordersD);
       })
       .catch((error) => {
         console.log(error);
@@ -198,7 +228,6 @@ function OrderTable() {
                         // eslint-disable-next-line no-shadow
                         ordersD.map((ele) => (
                           <StyledTableRow
-                            key={ele.id}
                             sx={{
                               "&:last-child td, &:last-child th": {
                                 border: 0,
@@ -212,19 +241,31 @@ function OrderTable() {
                             <StyledTableCell>
                               {ele.productId.price}
                             </StyledTableCell>
-                            {/* <StyledTableCell>"user ID sae city"</StyledTableCell> */}
                           </StyledTableRow>
                         ))
                       }
                     </TableBody>
                   </Table>
                 </TableContainer>
+                <Button
+                  onClick={() => updateStatus(orderID)}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  style={{
+                    backgroundColor: "#45464c",
+                    textTransform: "capitalize",
+                    fontfamily:
+                      "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
+                  }}
+                >
+                  Disptach Order
+                </Button>
               </Grid>
             </Grid>
           </Paper>
         </Box>
       </Modal>
-
       <TableContainer sx={{ maxHeight: 600 }}>
         <Table aria-label="sticky table">
           <TableHead>
@@ -246,7 +287,7 @@ function OrderTable() {
             ).map((ele) => (
               <StyledTableRow
                 key={ele.id}
-                onClick={() => handleOpen2(ele.items)}
+                onClick={() => handleOpen2(ele.items, ele._id)}
                 // align={column.align}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >

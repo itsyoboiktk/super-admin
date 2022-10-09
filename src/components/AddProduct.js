@@ -80,13 +80,14 @@ const AddProduct = () => {
     event.preventDefault();
     console.log("here");
     const data = new FormData(event.currentTarget);
-    console.log(data);
+
     data.sizes = sizes;
-    sendData(data.sizes);
+    console.log(data);
+    sendData(data);
   };
 
   const sendData = (data) => {
-    console.log(data.get("title"));
+    // console.log(data.get("title"));
     axios
       .post("http://localhost:4000/product/upload", data, {
         headers: {
@@ -259,7 +260,6 @@ const AddProduct = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                
                   name="description"
                   multiline
                   minRows={3}

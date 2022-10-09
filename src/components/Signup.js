@@ -53,8 +53,6 @@ const SignUp = () => {
       street: data.get("street"),
       sector: data.get("sector"),
       city: data.get("city"),
-      postal: data.get("postal"),
-      region: data.get("region"),
       phone: data.get("phone"),
       country: "Pakistan",
     };
@@ -185,27 +183,6 @@ const SignUp = () => {
                   autoComplete="City"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="Postal"
-                  label="Postal Code"
-                  name="postal"
-                  autoComplete="Postal"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="Region"
-                  label="Region"
-                  name="region"
-                  autoComplete="Region"
-                />
-              </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   required

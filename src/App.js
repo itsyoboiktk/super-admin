@@ -13,6 +13,7 @@ import UpdateProduct from "./components/UpdateProduct";
 import Inventory from "./components/Inventory";
 import ProductView from "./components/ProductView";
 import Orders from "./components/Orders";
+import Profile from "./components/Profile";
 const App = () => {
   return (
     <Router>
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="productView" element={<ProductView />} />
           <Route path="updateProduct" element={<UpdateProduct />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </Router>
