@@ -4,7 +4,7 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AddIcon from "@mui/icons-material/Add";
-import GroupIcon from "@mui/icons-material/Group";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 export const SideBarData = [
   {
@@ -23,20 +23,10 @@ export const SideBarData = [
     link: "/home/inventory",
   },
   {
-    title: "Reports",
-    icon: <AssessmentIcon />,
-    link: "/home/reports",
-  },
-  {
-    title: "Settings",
-    icon: <SettingsIcon />,
-    link: "/home/settings",
-  },
-  {
     title: "Add Product",
     icon: <AddIcon />,
     link: "/home/addProduct",
   },
-  { title: "Users", icon: <GroupIcon />, link: "/home/users" },
+  { title: "Profile", icon: <AccountCircleIcon />, link: "/home/profile" },
   { title: "Log out", icon: <LogoutIcon />, link: "/home/log out" },
 ];

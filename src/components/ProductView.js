@@ -212,6 +212,13 @@ const ProductView = () => {
         <Rating name="half-rating" defaultValue={4} size="large" />
         <p>{"(1.5k)"}</p>
 
+        <Grid container wrap="nowrap" spacing={2}>
+          <Grid justifyContent="left" item xs zeroMinWidth>
+            <h4 style={{ margin: 0, textAlign: "left" }}>Product Info: </h4>
+            <p style={{ textAlign: "left" }}>{product.desc}</p>
+          </Grid>
+        </Grid>
+
         <div
           style={{
             height: "2px",
@@ -239,6 +246,11 @@ const ProductView = () => {
             style={{ marginBottom: "10px" }}
             variant="outlined"
             startIcon={<UpgradeIcon />}
+            onClick={() =>
+              navigate("/home/updateProduct", {
+                state: { product: product },
+              })
+            }
           >
             Update
           </Button>

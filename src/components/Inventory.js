@@ -50,9 +50,11 @@ const Inventory = () => {
     boxShadow: 25,
     p: 4,
   };
+
+  const sID = "6341e29d65f5afd41390c047";
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/product/display", {
+      .get(`http://localhost:4000/product/inventory/display/${sID}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },

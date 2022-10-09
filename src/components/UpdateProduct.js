@@ -30,12 +30,13 @@ const UpdateProduct = () => {
   const navigate = useNavigate();
   const product = state.product;
 
-  const [age, setAge] = React.useState(product.category);
+  const [category, setCategory] = React.useState(product.category);
   const [gender, setGender] = React.useState(product.gender);
   const [title, setTitle] = React.useState(product.title);
   const [price, setPrice] = React.useState(product.price);
   const [brand, setBrand] = React.useState(product.brand);
   const [quantity, setQuantity] = React.useState(product.quantity);
+  const [desc, setDesc] = React.useState(product.desc);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -46,7 +47,7 @@ const UpdateProduct = () => {
     navigate("/home/inventory");
   };
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setCategory(event.target.value);
   };
   const handleChangeGender = (event) => {
     setGender(event.target.value);
@@ -63,6 +64,9 @@ const UpdateProduct = () => {
   const handleChangeQuantity = (event) => {
     setQuantity(event.target.value);
   };
+  const handleChangeDescription = (event) => {
+    setDesc(event.target.value);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -75,6 +79,7 @@ const UpdateProduct = () => {
       price: data.get("price"),
       brand: data.get("brand"),
       quantity: data.get("quantity"),
+      desc: data.get("desc"),
     };
     sendData(updated);
   };
@@ -156,7 +161,7 @@ const UpdateProduct = () => {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={age}
+                      value={category}
                       label="Category"
                       onChange={handleChange}
                       name="category"
@@ -226,6 +231,22 @@ const UpdateProduct = () => {
               </Grid>
 
               <Grid item xs={12}>
+                <TextField
+                  name="desc"
+                  multiline
+                  minRows={3}
+                  required
+                  fullWidth
+                  value={desc}
+                  onChange={handleChangeDescription}
+                  id="description"
+                  label="Product Description"
+                  placeholder="Product Description"
+                  autoFocus
+                />
+              </Grid>
+
+              {/* <Grid item xs={12}>
                 <Button variant="contained" component="label">
                   Upload File
                   <input
@@ -236,7 +257,7 @@ const UpdateProduct = () => {
                     accept="image/png , image/jpeg"
                   />
                 </Button>
-              </Grid>
+              </Grid> */}
             </Grid>
 
             <Button
@@ -251,7 +272,7 @@ const UpdateProduct = () => {
                   "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
               }}
             >
-              Add Product
+              Update Product
             </Button>
           </Box>
         </Box>
