@@ -58,7 +58,7 @@ const SignUp = () => {
       phone: data.get("phone"),
       country: "Pakistan",
     };
-    axios.post("http://localhost:4000/manager/register", newMan).then((res) => {
+    axios.post("http://localhost:4040/manager/register", newMan).then((res) => {
       console.log(res);
     });
   };

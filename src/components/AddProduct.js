@@ -259,6 +259,7 @@ const AddProduct = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                
                   name="description"
                   multiline
                   minRows={3}
