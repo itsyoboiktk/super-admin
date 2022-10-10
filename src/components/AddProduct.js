@@ -18,6 +18,7 @@ import axios from "axios";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { eventWrapper } from "@testing-library/user-event/dist/utils";
+import { baseURL } from "./request";
 
 const theme = createTheme({
   palette: {
@@ -80,16 +81,14 @@ const AddProduct = () => {
     event.preventDefault();
     console.log("here");
     const data = new FormData(event.currentTarget);
-
-    data.sizes = sizes;
-    console.log(data);
+    data.append("sizes", JSON.stringify(sizes));
     sendData(data);
   };
 
   const sendData = (data) => {
     // console.log(data.get("title"));
     axios
-      .post("http://localhost:4000/product/upload", data, {
+      .post(`${baseURL}/product/upload`, data, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -168,7 +167,7 @@ const AddProduct = () => {
                       name="category"
                     >
                       <MenuItem value="Sneaker">Sneaker</MenuItem>
-                      <MenuItem value="Causal">Casual</MenuItem>
+                      <MenuItem value="Causal">Sports</MenuItem>
                       <MenuItem value="Formal">Formal</MenuItem>
                     </Select>
                   </FormControl>

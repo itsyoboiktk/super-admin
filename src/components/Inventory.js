@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
+import { baseURL } from "./request";
 
 const Inventory = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Inventory = () => {
 
   const deleteProduct = () => {
     axios
-      .delete(`http://localhost:4000/product/delete/${id}`, {
+      .delete(`${baseURL}/product/delete/${id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -51,10 +52,10 @@ const Inventory = () => {
     p: 4,
   };
 
-  const sID = "6341e29d65f5afd41390c047";
+  // const sID = "6341e29d65f5afd41390c047";
   React.useEffect(() => {
     axios
-      .get(`http://localhost:4000/product/inventory/display/${sID}`, {
+      .get(`${baseURL}/product/display`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -67,6 +68,7 @@ const Inventory = () => {
         console.log(error);
       });
   }, [open]);
+
   return (
     <div className="invent">
       <div className="search_bar">

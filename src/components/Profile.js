@@ -6,6 +6,12 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import Input from "@mui/material/Input";
+import Stack from "@mui/material/Stack";
+import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import SignpostIcon from "@mui/icons-material/Signpost";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EmailIcon from "@mui/icons-material/Email";
 
 import Avatar from "@mui/material/Avatar";
 
@@ -17,23 +23,24 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import axios from "axios";
+import { baseURL } from "./request";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const sID = "6341e29d65f5afd41390c047";
-  const [shop, setShop] = React.useState();
   const [products, setProducts] = React.useState([]);
+  const [shop, setShop] = React.useState({
+    bio: "",
+    companyName: "",
+    managers: { name: "", email: "", phone: "" },
+    address: { house: "", street: "", sector: "", city: "" },
+  });
+
   const [open2, setOpen2] = React.useState(false);
+
   const handleOpen2 = () => {
     setOpen2(true);
   };
   const handleClose2 = () => setOpen2(false);
-
-  const [openAdd, setOpenAdd] = React.useState(false);
-  const handleOpenAdd = () => {
-    setOpenAdd(true);
-  };
-  const handleCloseAdd = () => setOpenAdd(false);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -52,13 +59,13 @@ const Profile = () => {
     console.log("Upload Pic");
     const data = new FormData(event.currentTarget);
     const updated = {
-      _id: sID,
+      // _id: sID,
       dp: data.get("dp"),
     };
     sendData3(updated);
   };
   const sendData3 = (data) => {
-    axios.put("http://localhost:4000/manager/update/dp", data).then((res) => {
+    axios.put(`${baseURL}/manager/update/dp`, data).then((res) => {
       console.log(res);
     });
   };
@@ -81,41 +88,38 @@ const Profile = () => {
     console.log("here store update");
     const data = new FormData(event.currentTarget);
     const updated = {
-      _id: sID,
-      companyName: data.get("shopName"),
+      addressId: shop.address._id,
+      managerId: shop.managers._id,
+      companyName: data.get("company"),
       bio: data.get("bio"),
-    };
-
-    sendData(updated);
-  };
-  const sendData = (data) => {
-    axios.put("http://localhost:4000/manager/update/info", data).then((res) => {
-      console.log(res);
-    });
-  };
-  const addrID = "6341e29d65f5afd41390c043";
-  const handleSubmitAddr = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const updated = {
-      _id: addrID,
+      managerName: data.get("firstName"),
       house: data.get("house"),
       street: data.get("street"),
       sector: data.get("sector"),
       city: data.get("city"),
     };
-
-    sendDataAddr(updated);
+    sendData(updated);
   };
-  const sendDataAddr = (data) => {
-    axios.put("http://localhost:4000/manager/update/addr", data).then((res) => {
-      console.log(res);
-    });
+  const sendData = (data) => {
+    axios
+      .put(`${baseURL}/manager/update/info`, data, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setOpen(!open);
+        console.log(res);
+      });
   };
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:4000/product/inventory/display/${sID}`)
+      .get(`${baseURL}/product/display`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         setProducts(res.data);
         console.log(res.data);
@@ -125,17 +129,58 @@ const Profile = () => {
       });
   }, []);
 
+  const [bio, setBio] = React.useState();
+  const [comp, setComp] = React.useState();
+  const [manName, setManName] = React.useState();
+  const [house, setHouse] = React.useState();
+  const [street, setStreet] = React.useState();
+  const [sector, setSector] = React.useState();
+  const [city, setCity] = React.useState();
+
+  const handleChangeBio = (event) => {
+    setBio(event.target.value);
+  };
+  const handleChangeComp = (event) => {
+    setComp(event.target.value);
+  };
+  const handleChangeMan = (event) => {
+    setManName(event.target.value);
+  };
+  const handleChangeHouse = (event) => {
+    setHouse(event.target.value);
+  };
+  const handleChangeStreet = (event) => {
+    setStreet(event.target.value);
+  };
+  const handleChangeSector = (event) => {
+    setSector(event.target.value);
+  };
+  const handleChangeCity = (event) => {
+    setCity(event.target.value);
+  };
   React.useEffect(() => {
+    console.log("here");
     axios
-      .get(`http://localhost:4000/manager/display/${sID}`)
+      .get(`${baseURL}/manager/getInfo`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
+        console.log(res.data);
         setShop(res.data[0]);
-        console.log(shop);
+        setBio(res.data[0].bio);
+        setComp(res.data[0].companyName);
+        setManName(res.data[0].managers.name);
+        setHouse(res.data[0].address.house);
+        setStreet(res.data[0].address.street);
+        setSector(res.data[0].address.sector);
+        setCity(res.data[0].address.city);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [open]);
 
   const style2 = {
     position: "absolute",
@@ -163,13 +208,14 @@ const Profile = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "gray", paddingTop: 20 }}>
+    <div style={{ paddingTop: 20 }}>
       <Card
         sx={{
           position: "relative",
           mx: 3,
           py: 2,
           px: 2,
+          backgroundColor: "#f8f9fa",
         }}
       >
         <Grid container spacing={3} alignItems="center">
@@ -179,10 +225,10 @@ const Profile = () => {
           <Grid item>
             <Box height="100%" mt={0.5} lineHeight={1}>
               <Typography variant="h5" fontWeight="medium">
-                {/* {man.company} */}
+                {shop.managers.name}
               </Typography>
               <Typography variant="button" color="text" fontWeight="regular">
-                CEO / Co-Founder
+                Manager
               </Typography>
             </Box>
           </Grid>
@@ -190,52 +236,75 @@ const Profile = () => {
       </Card>
 
       <Box mt={5} mb={3}>
-        <Grid container spacing={1}>
-          <Grid item xl={12} sx={{ display: "flex" }}>
-            <Card
-              sx={{
-                margin: "10px",
-                flex: "1 1 20%",
-                width: "1200px",
-                bgcolor: "white",
-              }}
-            >
-              <CardContent>
-                {/* <Paper style={{ padding: "40px 20px", overflow: "auto" }}> */}
-                <Grid container wrap="nowrap" spacing={2}>
-                  <Grid justifyContent="left" item xs zeroMinWidth>
-                    <h4 style={{ margin: 0, textAlign: "left" }}>
-                      Store Info:{" "}
-                    </h4>
-                    <p style={{ textAlign: "left" }}>
-                      {" "}
-                      Hello world
-                      {/* {shop.bio} */}
-                    </p>
-                  </Grid>
-                </Grid>
-                <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+        <Grid container spacing={0}>
+          <Card
+            sx={{
+              position: "relative",
+              mx: 3,
+              py: 2,
+              px: 2,
+              flex: "1 1 20%",
+              backgroundColor: "#f8f9fa",
+            }}
+          >
+            <CardContent>
+              {/* <Paper style={{ padding: "40px 20px", overflow: "auto" }}> */}
+              <Typography gutterBottom variant="h4" component="div">
+                {shop.companyName}
+              </Typography>
+
+              <Grid justifyContent="left" item xs zeroMinWidth>
+                <h4 style={{ margin: 0, textAlign: "left" }}></h4>
+                <p style={{ textAlign: "left" }}>{shop.bio}</p>
+              </Grid>
+              <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+              <Stack direction="row" spacing={2}>
                 <Typography gutterBottom variant="h6" component="div">
-                  Store Name: "shop.companyName"
+                  <EmailIcon />
+                  Email:
                 </Typography>
+                <Typography variant="h6" className="text-muted">
+                  {shop.managers.email}
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={2}>
                 <Typography gutterBottom variant="h6" component="div">
-                  Email: "man.email"
+                  <LocationCityIcon />
+                  Building:
                 </Typography>
+                <Typography variant="h6" className="text-muted">
+                  {shop.address.house}
+                </Typography>
+              </Stack>
+              <Stack direction="row" spacing={2}>
                 <Typography gutterBottom variant="h6" component="div">
-                  Address: "man.Address"
+                  <SignpostIcon />
+                  Street:
                 </Typography>
+                <Typography variant="h6" className="text-muted">
+                  {shop.address.street + " "} {shop.address.sector + " "}
+                </Typography>
+              </Stack>
+              <Typography gutterBottom variant="h6">
+                <LocationOnIcon />
+                {shop.address.city}
+              </Typography>
+              <Stack direction="row" spacing={2}>
                 <Typography gutterBottom variant="h6" component="div">
-                  Mobile: "man.Company"
+                  <ContactPhoneIcon />
+                  Phone:
                 </Typography>
-                {/* </Paper> */}
-              </CardContent>
-              <CardActions>
-                <Button onClick={() => handleOpen()}>Edit Profile</Button>
-                <Button onClick={() => handleOpenAdd()}>Change Address</Button>
-                <Button onClick={() => handleOpen2()}>Change Password</Button>
-              </CardActions>
-            </Card>
-          </Grid>
+                <Typography variant="h6" className="text-muted">
+                  {shop.managers.phone}
+                </Typography>
+              </Stack>
+              {/* </Paper> */}
+            </CardContent>
+            <CardActions>
+              <Button onClick={() => handleOpen()}>Edit Profile</Button>
+              <Button onClick={() => handleOpen2()}>Change Password</Button>
+            </CardActions>
+          </Card>
         </Grid>
       </Box>
       <Modal
@@ -254,104 +323,96 @@ const Profile = () => {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={24} sm={12}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     autoComplete="given-name"
-                    name="shopName"
+                    name="firstName"
                     required
                     fullWidth
-                    placeholder="Shop Name"
-                    id="shopName"
+                    id="firstName"
+                    label="First Name"
                     autoFocus
+                    value={manName}
+                    onChange={handleChangeMan}
                   />
                 </Grid>
-                <Grid item xs={12} sm={12}>
+                <Grid item xs={12}>
                   <TextField
-                    name="bio"
-                    placeholder="Shop Info"
                     required
                     fullWidth
-                    id="detail"
-                    autoFocus
-                    multiline
+                    id="company"
+                    label="Company"
+                    name="company"
+                    autoComplete="Company"
+                    value={comp}
+                    onChange={handleChangeComp}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="bio"
+                    label="Shop Info"
+                    name="bio"
+                    autoComplete="bio"
+                    value={bio}
+                    onChange={handleChangeBio}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="House"
+                    label="House"
+                    name="house"
+                    autoComplete="House"
+                    value={house}
+                    onChange={handleChangeHouse}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="Street"
+                    label="Street"
+                    name="street"
+                    autoComplete="Street"
+                    value={street}
+                    onChange={handleChangeStreet}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="Sector"
+                    label="Sector"
+                    name="sector"
+                    autoComplete="Sector"
+                    value={sector}
+                    onChange={handleChangeSector}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="City"
+                    label="City"
+                    name="city"
+                    autoComplete="City"
+                    value={city}
+                    onChange={handleChangeCity}
                   />
                 </Grid>
               </Grid>
               <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
               <Button type="Proceed" variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Update
-              </Button>
-            </Box>
-          </Paper>
-        </Box>
-      </Modal>
-      <Modal
-        open={openAdd}
-        onClose={handleCloseAdd}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box bgColor="light" coloredShadow="dark" sx={style2}>
-          <Paper style={{ padding: "40px 20px", overflow: "auto" }}>
-            <Box
-              alignItems="center"
-              component="form"
-              noValidate
-              onSubmit={handleSubmitAddr}
-              sx={{ mt: 3 }}
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={24} sm={6}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="house"
-                    required
-                    fullWidth
-                    placeholder="house"
-                    id="house"
-                    autoFocus
-                    label="House"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name="street"
-                    placeholder="Street"
-                    required
-                    fullWidth
-                    id="street"
-                    autoFocus
-                    label="Street"
-                  />
-                </Grid>
-                <Grid item xs={24} sm={6}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="sector"
-                    required
-                    fullWidth
-                    placeholder="Sector"
-                    id="sector"
-                    autoFocus
-                    label="Sector"
-                  />
-                </Grid>
-                <Grid item xs={24} sm={6}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="city"
-                    required
-                    fullWidth
-                    placeholder="City"
-                    id="city"
-                    autoFocus
-                    label="City"
-                  />
-                </Grid>
-              </Grid>
-              <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-              <Button type="Proceed" variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Update Address
               </Button>
             </Box>
           </Paper>
@@ -460,7 +521,7 @@ const Profile = () => {
         px={2}
         lineHeight={1.25}
         style={{
-          backgroundColor: "white-smoke",
+          backgroundColor: "#f8f9fa",
           borderRadius: 5,
           marginLeft: 10,
           marginRight: 11,
@@ -473,55 +534,79 @@ const Profile = () => {
           Top Products
         </Typography>
       </Box>
-      <Box p={2} display="flex" flexDirection="column">
-        <Grid item xs={12} xl={12}>
-          <div className="grid-container">
-            {products.map((ele) => (
-              <Box
-                display="flex"
-                borderRadius="lg"
-                shadow="md"
-                width="100%"
-                height="100%"
-                marginRight={10}
-                paddingBottom={1}
-              >
-                <Card sx={{ maxWidth: 345, margin: "10px", flex: "1 1 20%" }}>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={`http://localhost:4000/${ele.path[0]}`}
-                    alt="product image"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {ele.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {ele.brand}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      PKR/- {ele.price}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      onClick={() =>
-                        navigate("/home/productView", {
-                          state: { product: ele },
-                        })
-                      }
-                    >
-                      View
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Box>
-            ))}
-          </div>
-        </Grid>
-      </Box>
+      <div
+        style={{
+          flexFlow: "wrap",
+          border: "red 1px",
+          flexDirection: "column",
+        }}
+      >
+        <Box
+          p={2}
+          style={{
+            backgroundColor: "#f8f9fa",
+            borderRadius: 5,
+            marginLeft: 10,
+            marginRight: 11,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Grid item xs={12} xl={12}>
+            <div className="grid-container">
+              {products.map((ele) => (
+                <Box
+                  display="flex"
+                  borderRadius="16px"
+                  width="30%"
+                  height="100%"
+                  marginRight={10}
+                  paddingBottom={1}
+                >
+                  <Card
+                    sx={{
+                      maxWidth: 345,
+                      margin: "10px",
+                      flex: "1 1 20%",
+                      boxShadow: "1px 3px 1px #9E9E9E",
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={`http://localhost:4000/${ele.path[0]}`}
+                      alt="product image"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {ele.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {ele.brand}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        PKR/- {ele.price}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        size="small"
+                        onClick={() =>
+                          navigate("/home/productView", {
+                            state: { product: ele },
+                          })
+                        }
+                      >
+                        View
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Box>
+              ))}
+            </div>
+          </Grid>
+        </Box>
+      </div>
     </div>
   );
 };

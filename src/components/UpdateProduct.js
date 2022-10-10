@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate, useLocation } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
+import { baseURL } from "./request";
 
 const theme = createTheme({
   palette: {
@@ -86,7 +87,7 @@ const UpdateProduct = () => {
 
   const sendData = (data) => {
     axios
-      .put("http://localhost:4000/product/update", data, {
+      .put(`${baseURL}/product/update`, data, {
         // headers: {
         //   Authorization: localStorage.getItem("token"),
         // },

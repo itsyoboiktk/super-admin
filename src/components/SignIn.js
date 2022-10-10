@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { baseURL } from "./request";
 
 function Copyright(props) {
   return (
@@ -56,7 +57,7 @@ export default function SignIn() {
   const checkAuth = (data) => {
     console.log("here");
     axios
-      .post("http://localhost:4000/manager/login", data)
+      .post(`${baseURL}/manager/login`, data)
       .then((result) => {
         localStorage.setItem("token", "Bearer " + result.data.token);
         navigate("/home");

@@ -13,6 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import axios from "axios";
+import { baseURL } from "./request";
 
 const ProductView = () => {
   const style = {
@@ -47,7 +48,7 @@ const ProductView = () => {
 
   const reviewClicked = () => {
     axios
-      .get(`http://localhost:4000/review/get/${product._id}`)
+      .get(`${baseURL}/review/get/${product._id}`)
       .then((res) => {
         setReviews(res.data);
         handleOpen2();
@@ -80,7 +81,7 @@ const ProductView = () => {
   };
   const deleteProduct = () => {
     axios
-      .delete(`http://localhost:4000/product/delete/${product._id}`, {
+      .delete(`${baseURL}/product/delete/${product._id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },

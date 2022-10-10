@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import { baseURL } from "./request";
 function Copyright(props) {
   return (
     <Typography
@@ -56,7 +57,7 @@ const SignUp = () => {
       phone: data.get("phone"),
       country: "Pakistan",
     };
-    axios.post("http://localhost:4000/manager/register", newMan).then((res) => {
+    axios.post(`${baseURL}/manager/register`, newMan).then((res) => {
       console.log(res);
     });
   };

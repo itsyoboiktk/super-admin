@@ -27,6 +27,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { baseURL } from "./request";
 // import order from "../../../fyp-backend/models/order";
 
 function TablePaginationActions(props) {
@@ -126,7 +127,7 @@ function OrderTable() {
 
   const sendData = (data) => {
     axios
-      .put("http://localhost:4000/order/update", data, {
+      .put(`${baseURL}/order/update`, data, {
         // headers: {
         //   Authorization: localStorage.getItem("token"),
         // },
@@ -135,10 +136,14 @@ function OrderTable() {
         console.log(res);
       });
   };
-  const sID = "6341e29d65f5afd41390c047";
+
   React.useEffect(() => {
     axios
-      .get(`http://localhost:4000/order/display/${sID}`)
+      .get(`${baseURL}/order/display`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         console.log(res.data);
         setOrders(res.data);
