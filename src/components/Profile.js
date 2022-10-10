@@ -574,7 +574,7 @@ const Profile = () => {
                     <CardMedia
                       component="img"
                       height="140"
-                      image={`http://localhost:4000/${ele.path[0]}`}
+                      image={`${baseURL}/${ele.path[0]}`}
                       alt="product image"
                     />
                     <CardContent>
