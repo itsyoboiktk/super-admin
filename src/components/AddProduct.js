@@ -17,7 +17,7 @@ import Modal from "@mui/material/Modal";
 import axios from "axios";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { eventWrapper } from "@testing-library/user-event/dist/utils";
+import { baseURL } from "./request";
 
 const theme = createTheme({
   palette: {
@@ -67,29 +67,36 @@ const AddProduct = () => {
       let newArr = sizes;
       newArr.push(event);
       setSizes(newArr);
-      console.log(sizes);
     } else {
       let newArr = sizes;
       let i = newArr.indexOf(event);
       newArr.splice(i, 1);
       setSizes(newArr);
-      console.log("hello", sizes);
     }
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("here");
     const data = new FormData(event.currentTarget);
+    // const pro = {
+    //   title: data.get("title"),
+    //   category: data.get("category"),
+    //   gender: data.get("gender"),
+    //   brand: data.get("brand"),
+    //   price: data.get("price"),
+    //   quantity: data.get("quantity"),
+    //   desc: data.get("desc"),
+    //   sizes: sizes,
+    //   images: data.get("images"),
+    // };
+    data.append("sizes", JSON.stringify(sizes));
 
-    data.sizes = sizes;
-    console.log(data);
     sendData(data);
   };
 
   const sendData = (data) => {
-    // console.log(data.get("title"));
+    console.log(data);
     axios
-      .post("http://localhost:4000/product/upload", data, {
+      .post(`${baseURL}/product/upload`, data, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -260,7 +267,7 @@ const AddProduct = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="description"
+                  name="desc"
                   multiline
                   minRows={3}
                   required

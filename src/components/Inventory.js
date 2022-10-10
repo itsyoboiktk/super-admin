@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
+import { baseURL } from "./request";
 
 const Inventory = () => {
   const navigate = useNavigate();
@@ -51,10 +52,9 @@ const Inventory = () => {
     p: 4,
   };
 
-  const sID = "6341e29d65f5afd41390c047";
   React.useEffect(() => {
     axios
-      .get(`http://localhost:4000/product/inventory/display/${sID}`, {
+      .get(`${baseURL}/product/display`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -67,6 +67,7 @@ const Inventory = () => {
         console.log(error);
       });
   }, [open]);
+
   return (
     <div className="invent">
       <div className="search_bar">
@@ -79,7 +80,7 @@ const Inventory = () => {
               <CardMedia
                 component="img"
                 height="140"
-                image={`http://localhost:4000/${element.path[0]}`}
+                image={`${baseURL}/${element.path[0]}`}
                 alt="product image"
               />
               <CardContent>
