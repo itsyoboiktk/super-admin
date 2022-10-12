@@ -219,23 +219,26 @@ const Profile = () => {
           py: 2,
           px: 2,
           backgroundColor: "#f8f9fa",
-          align: "center",
         }}
       >
-        <Box
-          height="100%"
-          mt={0.5}
-          lineHeight={1}
-          sx={{ alignContent: "center" }}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "aqua",
+            flexDirection: "column",
+          }}
         >
-          <Avatar onClick={() => handleOpen3()}>DP</Avatar>
+          <Avatar sx={{}} onClick={() => handleOpen3()}>
+            DP
+          </Avatar>
           <Typography variant="h5" fontWeight="medium">
             {shop.managers.name}
           </Typography>
           <Typography variant="button" color="text" fontWeight="regular">
             Manager
           </Typography>
-        </Box>
+        </div>
       </Card>
 
       <Box mt={5} mb={3}>

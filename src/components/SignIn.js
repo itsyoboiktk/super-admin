@@ -58,7 +58,7 @@ export default function SignIn() {
       .post(`${baseURL}/manager/login`, data)
       .then((result) => {
         localStorage.setItem("token", "Bearer " + result.data.token);
-        navigate("/home");
+        navigate("/");
       })
       .catch((err) => {
         setOpen(true);

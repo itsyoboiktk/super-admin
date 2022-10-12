@@ -7,7 +7,7 @@ import Logout from "@mui/icons-material/Logout";
 const SideBar = () => {
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    navigate("/signIn");
   };
   const navigate = useNavigate();
   const location = useLocation();
