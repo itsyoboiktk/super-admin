@@ -14,24 +14,38 @@ import Inventory from "./components/Inventory";
 import ProductView from "./components/ProductView";
 import Orders from "./components/Orders";
 import Profile from "./components/Profile";
+import React from "react";
 const App = () => {
+  const [token, setToken] = React.useState(false);
+  React.useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setToken(true);
+    } else {
+      setToken(false);
+    }
+  }, []);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-
-        <Route path="/home" element={<Layout />}>
-          <Route path="" element={<Overview />} />
-          <Route path="overview" element={<Overview />} />
-          <Route path="inventory" element={<Inventory />} />
-          <Route path="addProduct" element={<AddProduct />} />
-          <Route path="addImages" element={<AddImages />} />
-          <Route path="productView" element={<ProductView />} />
-          <Route path="updateProduct" element={<UpdateProduct />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="profile" element={<Profile />} />
-        </Route>
+        {!token ? (
+          <>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+          </>
+        ) : (
+          <Route path="/home" element={<Layout />}>
+            <Route path="" element={<Overview />} />
+            <Route path="overview" element={<Overview />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="addProduct" element={<AddProduct />} />
+            <Route path="addImages" element={<AddImages />} />
+            <Route path="productView" element={<ProductView />} />
+            <Route path="updateProduct" element={<UpdateProduct />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
+        )}
       </Routes>
     </Router>
   );

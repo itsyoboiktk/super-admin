@@ -52,7 +52,6 @@ const Inventory = () => {
     p: 4,
   };
 
-  // const sID = "6341e29d65f5afd41390c047";
   React.useEffect(() => {
     axios
       .get(`${baseURL}/product/display`, {
@@ -81,7 +80,7 @@ const Inventory = () => {
               <CardMedia
                 component="img"
                 height="140"
-                image={`http://localhost:4000/${element.path[0]}`}
+                image={`${baseURL}/${element.path[0]}`}
                 alt="product image"
               />
               <CardContent>

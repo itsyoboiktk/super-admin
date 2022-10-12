@@ -12,7 +12,10 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import SignpostIcon from "@mui/icons-material/Signpost";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
-
+// import {
+//   Container,
+//   Row,
+// } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
 
 // Data
@@ -216,23 +219,23 @@ const Profile = () => {
           py: 2,
           px: 2,
           backgroundColor: "#f8f9fa",
+          align: "center",
         }}
       >
-        <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <Avatar onClick={() => handleOpen3()}>DP</Avatar>
-          </Grid>
-          <Grid item>
-            <Box height="100%" mt={0.5} lineHeight={1}>
-              <Typography variant="h5" fontWeight="medium">
-                {shop.managers.name}
-              </Typography>
-              <Typography variant="button" color="text" fontWeight="regular">
-                Manager
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
+        <Box
+          height="100%"
+          mt={0.5}
+          lineHeight={1}
+          sx={{ alignContent: "center" }}
+        >
+          <Avatar onClick={() => handleOpen3()}>DP</Avatar>
+          <Typography variant="h5" fontWeight="medium">
+            {shop.managers.name}
+          </Typography>
+          <Typography variant="button" color="text" fontWeight="regular">
+            Manager
+          </Typography>
+        </Box>
       </Card>
 
       <Box mt={5} mb={3}>
@@ -258,40 +261,57 @@ const Profile = () => {
                 <p style={{ textAlign: "left" }}>{shop.bio}</p>
               </Grid>
               <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-              <Stack direction="row" spacing={2}>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <EmailIcon />
+
                 <Typography gutterBottom variant="h6" component="div">
-                  <EmailIcon />
                   Email:
                 </Typography>
                 <Typography variant="h6" className="text-muted">
                   {shop.managers.email}
                 </Typography>
               </Stack>
-              <Stack direction="row" spacing={2}>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <LocationCityIcon />
                 <Typography gutterBottom variant="h6" component="div">
-                  <LocationCityIcon />
                   Building:
                 </Typography>
                 <Typography variant="h6" className="text-muted">
                   {shop.address.house}
                 </Typography>
               </Stack>
-              <Stack direction="row" spacing={2}>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <SignpostIcon />
                 <Typography gutterBottom variant="h6" component="div">
-                  <SignpostIcon />
                   Street:
                 </Typography>
                 <Typography variant="h6" className="text-muted">
-                  {shop.address.street + " "} {shop.address.sector + " "}
+                  {shop.address.street + ", "} {shop.address.sector + " "}
                 </Typography>
               </Stack>
               <Typography gutterBottom variant="h6">
                 <LocationOnIcon />
                 {shop.address.city}
               </Typography>
-              <Stack direction="row" spacing={2}>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <ContactPhoneIcon />
                 <Typography gutterBottom variant="h6" component="div">
-                  <ContactPhoneIcon />
                   Phone:
                 </Typography>
                 <Typography variant="h6" className="text-muted">
@@ -318,7 +338,7 @@ const Profile = () => {
             <Box
               alignItems="center"
               component="form"
-              noValidate
+              validate
               onSubmit={handleSubmit}
               sx={{ mt: 3 }}
             >
@@ -536,76 +556,65 @@ const Profile = () => {
       </Box>
       <div
         style={{
-          flexFlow: "wrap",
-          border: "red 1px",
-          flexDirection: "column",
+          backgroundColor: "#f8f9fa",
+
+          marginLeft: 10,
+          marginRight: 11,
+          flexWrap: "wrap",
+          display: "flex",
+          flexDirection: "row",
+          // borderRadius: 5,
         }}
       >
-        <Box
-          p={2}
-          style={{
-            backgroundColor: "#f8f9fa",
-            borderRadius: 5,
-            marginLeft: 10,
-            marginRight: 11,
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Grid item xs={12} xl={12}>
-            <div className="grid-container">
-              {products.map((ele) => (
-                <Box
-                  display="flex"
-                  borderRadius="16px"
-                  width="30%"
-                  height="100%"
-                  marginRight={10}
-                  paddingBottom={1}
+        {products.map((ele) => (
+          <Box
+            // display="flex"
+            borderRadius="16px"
+            width="30%"
+            height="100%"
+            marginRight={3}
+            paddingBottom={1}
+          >
+            <Card
+              sx={{
+                maxWidth: 245,
+                margin: "10px",
+                flex: "1 1 20%",
+                boxShadow: "1px 3px 1px #9E9E9E",
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="140"
+                image={`${baseURL}/${ele.path[0]}`}
+                alt="product image"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {ele.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {ele.brand}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  PKR/- {ele.price}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  onClick={() =>
+                    navigate("/home/productView", {
+                      state: { product: ele },
+                    })
+                  }
                 >
-                  <Card
-                    sx={{
-                      maxWidth: 345,
-                      margin: "10px",
-                      flex: "1 1 20%",
-                      boxShadow: "1px 3px 1px #9E9E9E",
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={`${baseURL}/${ele.path[0]}`}
-                      alt="product image"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {ele.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {ele.brand}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        PKR/- {ele.price}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button
-                        size="small"
-                        onClick={() =>
-                          navigate("/home/productView", {
-                            state: { product: ele },
-                          })
-                        }
-                      >
-                        View
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Box>
-              ))}
-            </div>
-          </Grid>
-        </Box>
+                  View
+                </Button>
+              </CardActions>
+            </Card>
+          </Box>
+        ))}
       </div>
     </div>
   );

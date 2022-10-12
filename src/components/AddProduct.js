@@ -134,12 +134,7 @@ const AddProduct = () => {
           <Typography component="h1" variant="h6">
             Add New Product
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -165,6 +160,7 @@ const AddProduct = () => {
                       label="Category"
                       onChange={handleChange}
                       name="category"
+                      required={true}
                     >
                       <MenuItem value="Sneaker">Sneaker</MenuItem>
                       <MenuItem value="Causal">Sports</MenuItem>
@@ -195,6 +191,7 @@ const AddProduct = () => {
                       label="For"
                       name="gender"
                       onChange={handleChangeGender}
+                      required={true}
                     >
                       <MenuItem value="Men">Men</MenuItem>
                       <MenuItem value="Women">Women</MenuItem>
@@ -279,6 +276,7 @@ const AddProduct = () => {
                     name="images"
                     hidden
                     multiple
+                    required
                     accept="image/png , image/jpeg"
                   />
                 </Button>
