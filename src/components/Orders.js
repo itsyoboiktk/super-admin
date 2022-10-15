@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { useTheme, styled } from "@mui/material/styles";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
   TableContainer,
   Table,
@@ -15,6 +16,10 @@ import {
   Grid,
   Paper,
   Typography,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Icon,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Modal from "@mui/material/Modal";
@@ -27,6 +32,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { baseURL } from "./request";
 // import order from "../../../fyp-backend/models/order";
 
 function TablePaginationActions(props) {
@@ -102,11 +108,12 @@ function OrderTable() {
   const [orders, setOrders] = React.useState([]);
   const [ordersD, setOrdersD] = React.useState([]);
   const [orderID, setOrderID] = React.useState();
-
+  const [address, setAddress] = React.useState({});
   const [open2, setOpen2] = React.useState(false);
 
   const handleOpen2 = (val, idO) => {
-    setOrdersD(val);
+    setOrdersD(val.items);
+    setAddress(val.address);
     setOrderID(idO);
     setOpen2(true);
   };
@@ -118,7 +125,7 @@ function OrderTable() {
 
     const updated = {
       id: val,
-      status: "COMPLETED",
+      status: "completed",
     };
     console.log(updated);
     sendData(updated);
@@ -126,19 +133,26 @@ function OrderTable() {
 
   const sendData = (data) => {
     axios
-      .put("http://localhost:4000/order/update", data, {
+      .put(`${baseURL}/order/update`, data, {
         // headers: {
         //   Authorization: localStorage.getItem("token"),
         // },
       })
       .then((res) => {
-        console.log(res);
+        setOpen2(false);
+      })
+      .catch((e) => {
+        consol.log(e);
       });
   };
-  const sID = "6341e29d65f5afd41390c047";
+
   React.useEffect(() => {
     axios
-      .get(`http://localhost:4000/order/display/${sID}`)
+      .get(`${baseURL}/order/display`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         console.log(res.data);
         setOrders(res.data);
@@ -146,7 +160,7 @@ function OrderTable() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [open2]);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -183,90 +197,142 @@ function OrderTable() {
       border: 0,
     },
   }));
+  const calTotal = () => {
+    let total = 0;
+    ordersD.map((el, i) => {
+      total = total + +el.productId.price;
+    });
+    console.log(total);
+    return total;
+  };
 
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    maxHeight: 600,
+    overflow: "scroll",
+  };
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+    <div
+      style={{
+        marginLeft: 10,
+        marginRight: 10,
+        flexWrap: "wrap",
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
       <Modal
         open={open2}
         onClose={handleClose2}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "30%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "80%",
-            bgcolor: "white",
-            border: "1px solid",
-            borderRadius: "10px",
-            // p: 5,
-          }}
-        >
-          <Paper style={{ padding: "40px 20px", overflow: "auto" }}>
-            <Grid
-              container
-              wrap="nowrap"
-              spacing={2}
-              style={{ overflow: "auto" }}
+        <Box sx={style}>
+          <Typography variant="h6" color="text.primary" textAlign="center">
+            Order Detail
+          </Typography>
+          {ordersD.map((ele) => (
+            <Card
+              sx={{
+                minWidth: "100%",
+                maxWidth: "100%",
+                height: 120,
+                display: "flex",
+                flexDirection: "row",
+                marginTop: 2,
+                marginBottom: 2,
+              }}
             >
-              <Grid justifyContent="left" item xs zeroMinWidth>
-                <TableContainer>
-                  <Table aria-label="sticky table">
-                    <TableHead>
-                      <TableRow>
-                        <StyledTableCell>Shoe Name</StyledTableCell>
-                        <StyledTableCell>Shoe Size</StyledTableCell>
-                        <StyledTableCell>Price</StyledTableCell>
-                        <StyledTableCell>City</StyledTableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {
-                        // eslint-disable-next-line no-shadow
-                        ordersD.map((ele) => (
-                          <StyledTableRow
-                            sx={{
-                              "&:last-child td, &:last-child th": {
-                                border: 0,
-                              },
-                            }}
-                          >
-                            <StyledTableCell>
-                              {ele.productId.title}
-                            </StyledTableCell>
-                            <StyledTableCell>{ele.size}</StyledTableCell>
-                            <StyledTableCell>
-                              {ele.productId.price}
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        ))
-                      }
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <Button
-                  onClick={() => updateStatus(orderID)}
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  style={{
-                    backgroundColor: "#45464c",
-                    textTransform: "capitalize",
-                    fontfamily:
-                      "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
-                  }}
-                >
-                  Disptach Order
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
+              <CardMedia
+                component="img"
+                image={`${baseURL}/${ele.productId.path[0]}`}
+                alt="product image"
+                sx={{
+                  height: 120,
+                  width: 80,
+                  objectFit: "cover",
+                }}
+              />
+              <CardContent>
+                <Typography variant="h6" component="div">
+                  {ele.productId.title}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  {ele.productId.brand}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {"PKR. " + ele.productId.price}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Size: {ele.size}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
+
+          <Typography gutterBottom variant="body.2" component="div">
+            <LocationOnIcon />
+            {"House: " + address.house}
+          </Typography>
+          <Typography
+            gutterBottom
+            variant="body.2"
+            component="div"
+          ></Typography>
+          <Typography gutterBottom variant="body.2" component="div">
+            {"Street: " + address.street + ", " + address.sector}
+          </Typography>
+          <Typography gutterBottom variant="body.2" component="div">
+            {address.city}
+          </Typography>
+
+          <Typography
+            gutterBottom
+            variant="body.1"
+            component="div"
+            sx={{ fontWeight: "700" }}
+          >
+            {"Total:  Rs." + calTotal()}
+          </Typography>
+
+          <Button
+            onClick={() => updateStatus(orderID)}
+            variant="contained"
+            style={{
+              marginTop: 20,
+              backgroundColor: "green",
+              textTransform: "capitalize",
+              fontfamily:
+                "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
+            }}
+          >
+            Dispatch Order
+          </Button>
         </Box>
       </Modal>
-      <TableContainer sx={{ maxHeight: 600 }}>
+      <Box
+        sx={{
+          m: 2,
+          p: 3,
+          backgroundColor: "#fa3751",
+          borderRadius: "10px",
+          width: "100%",
+        }}
+      >
+        <Typography variant="h6" color="white">
+          Orders Management
+        </Typography>
+      </Box>
+      <TableContainer
+        sx={{ maxHeight: 600, borderRadius: "10px", m: 2, mt: -1 }}
+      >
         <Table aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -287,7 +353,7 @@ function OrderTable() {
             ).map((ele) => (
               <StyledTableRow
                 key={ele.id}
-                onClick={() => handleOpen2(ele.items, ele._id)}
+                onClick={() => handleOpen2(ele, ele._id)}
                 // align={column.align}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
@@ -307,6 +373,7 @@ function OrderTable() {
           <TableFooter>
             <TableRow>
               <TablePagination
+                sx={{ width: "100%" }}
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 colSpan={3}
                 count={orders.length}
@@ -326,7 +393,8 @@ function OrderTable() {
           </TableFooter>
         </Table>
       </TableContainer>
-    </Paper>
+    </div>
+    // </Paper>
   );
 }
 

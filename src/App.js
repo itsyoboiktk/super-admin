@@ -14,16 +14,16 @@ import Inventory from "./components/Inventory";
 import ProductView from "./components/ProductView";
 import Orders from "./components/Orders";
 import Profile from "./components/Profile";
+import React from "react";
+import PrivateRoute from "./PrivateRoute";
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<SignIn />} />
+        <Route path="/signIn" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-
-        <Route path="/home" element={<Layout />}>
-          <Route path="" element={<Overview />} />
-          <Route path="overview" element={<Overview />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Overview />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="addProduct" element={<AddProduct />} />
           <Route path="addImages" element={<AddImages />} />

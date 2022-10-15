@@ -81,7 +81,7 @@ const ProductView = () => {
   };
   const deleteProduct = () => {
     axios
-      .delete(`http://localhost:4000/product/delete/${product._id}`, {
+      .delete(`${baseURL}/product/delete/${product._id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -89,7 +89,7 @@ const ProductView = () => {
       .then((res) => {
         console.log("here", res);
         setOpen(false);
-        navigate("/home/inventory");
+        navigate("/inventory");
       })
       .catch((err) => {
         console.log(err);
@@ -205,13 +205,13 @@ const ProductView = () => {
         <p>Available Quantity: {product.quantity}</p>
         <p>Category: {product.category}</p>
         <p>For: {product.gender}</p>
+        <p>Available sizes:</p>
         <h4 style={{ fontWeight: "600" }}>
           Price:{"  "}
           {"Rs.  "}
           {product.price}
         </h4>
-        <Rating name="half-rating" defaultValue={4} size="large" />
-        <p>{"(1.5k)"}</p>
+        <Rating name="half-rating" defaultValue={4} size="large" disabled />
 
         <Grid container wrap="nowrap" spacing={2}>
           <Grid justifyContent="left" item xs zeroMinWidth>
@@ -248,7 +248,7 @@ const ProductView = () => {
             variant="outlined"
             startIcon={<UpgradeIcon />}
             onClick={() =>
-              navigate("/home/updateProduct", {
+              navigate("/updateProduct", {
                 state: { product: product },
               })
             }

@@ -17,6 +17,7 @@ import Modal from "@mui/material/Modal";
 import axios from "axios";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { eventWrapper } from "@testing-library/user-event/dist/utils";
 import { baseURL } from "./request";
 
 const theme = createTheme({
@@ -54,7 +55,7 @@ const AddProduct = () => {
   };
   const handleClose = () => {
     setOpen(false);
-    navigate("/home/inventory");
+    navigate("/inventory");
   };
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -67,34 +68,25 @@ const AddProduct = () => {
       let newArr = sizes;
       newArr.push(event);
       setSizes(newArr);
+      console.log(sizes);
     } else {
       let newArr = sizes;
       let i = newArr.indexOf(event);
       newArr.splice(i, 1);
       setSizes(newArr);
+      console.log("hello", sizes);
     }
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("here");
     const data = new FormData(event.currentTarget);
-    // const pro = {
-    //   title: data.get("title"),
-    //   category: data.get("category"),
-    //   gender: data.get("gender"),
-    //   brand: data.get("brand"),
-    //   price: data.get("price"),
-    //   quantity: data.get("quantity"),
-    //   desc: data.get("desc"),
-    //   sizes: sizes,
-    //   images: data.get("images"),
-    // };
     data.append("sizes", JSON.stringify(sizes));
-
     sendData(data);
   };
 
   const sendData = (data) => {
-    console.log(data);
+    // console.log(data.get("title"));
     axios
       .post(`${baseURL}/product/upload`, data, {
         headers: {
@@ -142,12 +134,7 @@ const AddProduct = () => {
           <Typography component="h1" variant="h6">
             Add New Product
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -173,9 +160,10 @@ const AddProduct = () => {
                       label="Category"
                       onChange={handleChange}
                       name="category"
+                      required={true}
                     >
                       <MenuItem value="Sneaker">Sneaker</MenuItem>
-                      <MenuItem value="Causal">Casual</MenuItem>
+                      <MenuItem value="Causal">Sports</MenuItem>
                       <MenuItem value="Formal">Formal</MenuItem>
                     </Select>
                   </FormControl>
@@ -203,6 +191,7 @@ const AddProduct = () => {
                       label="For"
                       name="gender"
                       onChange={handleChangeGender}
+                      required={true}
                     >
                       <MenuItem value="Men">Men</MenuItem>
                       <MenuItem value="Women">Women</MenuItem>
@@ -287,7 +276,9 @@ const AddProduct = () => {
                     name="images"
                     hidden
                     multiple
-                    accept="image/png , image/jpeg"
+                    required
+                    // accept="image/png , image/jpeg"
+                    accept="image/*"
                   />
                 </Button>
               </Grid>

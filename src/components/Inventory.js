@@ -26,7 +26,7 @@ const Inventory = () => {
 
   const deleteProduct = () => {
     axios
-      .delete(`http://localhost:4000/product/delete/${id}`, {
+      .delete(`${baseURL}/product/delete/${id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -79,7 +79,7 @@ const Inventory = () => {
             <Card sx={{ maxWidth: 345, margin: "10px", flex: "1 1 20%" }}>
               <CardMedia
                 component="img"
-                height="140"
+                height="210"
                 image={`${baseURL}/${element.path[0]}`}
                 alt="product image"
               />
@@ -98,7 +98,7 @@ const Inventory = () => {
                 <Button
                   size="small"
                   onClick={() =>
-                    navigate("/home/productView", {
+                    navigate("/productView", {
                       state: { product: element },
                     })
                   }
@@ -108,7 +108,7 @@ const Inventory = () => {
                 <Button
                   size="small"
                   onClick={() =>
-                    navigate("/home/updateProduct", {
+                    navigate("/updateProduct", {
                       state: { product: element },
                     })
                   }

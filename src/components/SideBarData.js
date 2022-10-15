@@ -10,23 +10,23 @@ export const SideBarData = [
   {
     title: "Overview",
     icon: <PieChartIcon />,
-    link: "/home/overview",
+    link: "/",
   },
   {
     title: "Orders",
     icon: <ReceiptIcon />,
-    link: "/home/orders",
+    link: "/orders",
   },
   {
     title: "Inventory",
     icon: <InventoryIcon />,
-    link: "/home/inventory",
+    link: "/inventory",
   },
   {
     title: "Add Product",
     icon: <AddIcon />,
-    link: "/home/addProduct",
+    link: "/addProduct",
   },
-  { title: "Profile", icon: <AccountCircleIcon />, link: "/home/profile" },
+  { title: "Profile", icon: <AccountCircleIcon />, link: "/profile" },
   { title: "Log out", icon: <LogoutIcon />, link: "/home/log out" },
 ];

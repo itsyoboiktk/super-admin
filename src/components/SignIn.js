@@ -10,9 +10,9 @@ import Snackbar from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
-import { baseURL } from "./request";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { baseURL } from "./request";
 
 function Copyright(props) {
   return (
@@ -58,7 +58,7 @@ export default function SignIn() {
       .post(`${baseURL}/manager/login`, data)
       .then((result) => {
         localStorage.setItem("token", "Bearer " + result.data.token);
-        navigate("/home");
+        navigate("/");
       })
       .catch((err) => {
         setOpen(true);

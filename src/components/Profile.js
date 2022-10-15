@@ -6,7 +6,16 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import Input from "@mui/material/Input";
-
+import Stack from "@mui/material/Stack";
+import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import SignpostIcon from "@mui/icons-material/Signpost";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EmailIcon from "@mui/icons-material/Email";
+// import {
+//   Container,
+//   Row,
+// } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
 
 // Data
@@ -21,7 +30,6 @@ import { baseURL } from "./request";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const sID = "6341e29d65f5afd41390c047";
   const [products, setProducts] = React.useState([]);
   const [shop, setShop] = React.useState({
     bio: "",
@@ -30,13 +38,6 @@ const Profile = () => {
     address: { house: "", street: "", sector: "", city: "" },
   });
 
-  const [bio, setBio] = React.useState();
-  const [comp, setComp] = React.useState();
-  const [manName, setManName] = React.useState();
-  const [house, setHouse] = React.useState();
-  const [street, setStreet] = React.useState();
-  const [sector, setSector] = React.useState();
-  const [city, setCity] = React.useState();
   const [open2, setOpen2] = React.useState(false);
 
   const handleOpen2 = () => {
@@ -61,7 +62,7 @@ const Profile = () => {
     console.log("Upload Pic");
     const data = new FormData(event.currentTarget);
     const updated = {
-      _id: sID,
+      // _id: sID,
       dp: data.get("dp"),
     };
     sendData3(updated);
@@ -100,7 +101,6 @@ const Profile = () => {
       sector: data.get("sector"),
       city: data.get("city"),
     };
-    console.log("plis work", updated);
     sendData(updated);
   };
   const sendData = (data) => {
@@ -112,19 +112,33 @@ const Profile = () => {
       })
       .then((res) => {
         setOpen(!open);
+        console.log(res);
       });
   };
 
   React.useEffect(() => {
     axios
-      .get(`http://localhost:4000/product/inventory/display/${sID}`)
+      .get(`${baseURL}/product/display`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         setProducts(res.data);
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  const [bio, setBio] = React.useState();
+  const [comp, setComp] = React.useState();
+  const [manName, setManName] = React.useState();
+  const [house, setHouse] = React.useState();
+  const [street, setStreet] = React.useState();
+  const [sector, setSector] = React.useState();
+  const [city, setCity] = React.useState();
 
   const handleChangeBio = (event) => {
     setBio(event.target.value);
@@ -148,6 +162,7 @@ const Profile = () => {
     setCity(event.target.value);
   };
   React.useEffect(() => {
+    console.log("here");
     axios
       .get(`${baseURL}/manager/getInfo`, {
         headers: {
@@ -155,6 +170,7 @@ const Profile = () => {
         },
       })
       .then((res) => {
+        console.log(res.data);
         setShop(res.data[0]);
         setBio(res.data[0].bio);
         setComp(res.data[0].companyName);
@@ -202,69 +218,115 @@ const Profile = () => {
           mx: 3,
           py: 2,
           px: 2,
+          backgroundColor: "#f8f9fa",
         }}
       >
-        <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <Avatar onClick={() => handleOpen3()}>DP</Avatar>
-          </Grid>
-          <Grid item>
-            <Box height="100%" mt={0.5} lineHeight={1}>
-              <Typography variant="h5" fontWeight="medium">
-                {shop.managers.name}
-              </Typography>
-              <Typography variant="button" color="text" fontWeight="regular">
-                Manager
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Avatar sx={{}} onClick={() => handleOpen3()}>
+            DP
+          </Avatar>
+          <Typography variant="h5" fontWeight="medium">
+            {shop.managers.name}
+          </Typography>
+          <Typography variant="button" color="text" fontWeight="regular">
+            Manager
+          </Typography>
+        </div>
       </Card>
 
       <Box mt={5} mb={3}>
-        <Grid container spacing={1}>
-          <Grid item xl={12} sx={{ display: "flex" }}>
-            <Card
-              sx={{
-                margin: "10px",
-                flex: "1 1 20%",
-                width: "1200px",
-                bgcolor: "white",
-              }}
-            >
-              <CardContent>
-                {/* <Paper style={{ padding: "40px 20px", overflow: "auto" }}> */}
-                <Typography gutterBottom variant="h4" component="div">
-                  {shop.companyName}
-                </Typography>
+        <Grid container spacing={0}>
+          <Card
+            sx={{
+              position: "relative",
+              mx: 3,
+              py: 2,
+              px: 2,
+              flex: "1 1 20%",
+              backgroundColor: "#f8f9fa",
+            }}
+          >
+            <CardContent>
+              {/* <Paper style={{ padding: "40px 20px", overflow: "auto" }}> */}
+              <Typography gutterBottom variant="h4" component="div">
+                {shop.companyName}
+              </Typography>
 
-                <Grid justifyContent="left" item xs zeroMinWidth>
-                  <h4 style={{ margin: 0, textAlign: "left" }}></h4>
-                  <p style={{ textAlign: "left" }}>{shop.bio}</p>
-                </Grid>
-                <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+              <Grid justifyContent="left" item xs zeroMinWidth>
+                <h4 style={{ margin: 0, textAlign: "left" }}></h4>
+                <p style={{ textAlign: "left" }}>{shop.bio}</p>
+              </Grid>
+              <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <EmailIcon />
+
                 <Typography gutterBottom variant="h6" component="div">
-                  Email: {shop.managers.email}
+                  Email:
                 </Typography>
+                <Typography variant="h6" className="text-muted">
+                  {shop.managers.email}
+                </Typography>
+              </Stack>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <LocationCityIcon />
                 <Typography gutterBottom variant="h6" component="div">
-                  Building: {shop.address.house + " "}
-                  <div>
-                    Street: {shop.address.street + " "}
-                    {shop.address.sector + " "}
-                  </div>
-                  {shop.address.city}
+                  Building:
                 </Typography>
+                <Typography variant="h6" className="text-muted">
+                  {shop.address.house}
+                </Typography>
+              </Stack>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <SignpostIcon />
                 <Typography gutterBottom variant="h6" component="div">
-                  Phone: {shop.managers.phone}
+                  Street:
                 </Typography>
-                {/* </Paper> */}
-              </CardContent>
-              <CardActions>
-                <Button onClick={() => handleOpen()}>Edit Profile</Button>
-                <Button onClick={() => handleOpen2()}>Change Password</Button>
-              </CardActions>
-            </Card>
-          </Grid>
+                <Typography variant="h6" className="text-muted">
+                  {shop.address.street + ", "} {shop.address.sector + " "}
+                </Typography>
+              </Stack>
+              <Typography gutterBottom variant="h6">
+                <LocationOnIcon />
+                {shop.address.city}
+              </Typography>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <ContactPhoneIcon />
+                <Typography gutterBottom variant="h6" component="div">
+                  Phone:
+                </Typography>
+                <Typography variant="h6" className="text-muted">
+                  {shop.managers.phone}
+                </Typography>
+              </Stack>
+              {/* </Paper> */}
+            </CardContent>
+            <CardActions>
+              <Button onClick={() => handleOpen()}>Edit Profile</Button>
+              <Button onClick={() => handleOpen2()}>Change Password</Button>
+            </CardActions>
+          </Card>
         </Grid>
       </Box>
       <Modal
@@ -278,7 +340,7 @@ const Profile = () => {
             <Box
               alignItems="center"
               component="form"
-              noValidate
+              validate
               onSubmit={handleSubmit}
               sx={{ mt: 3 }}
             >
@@ -481,7 +543,7 @@ const Profile = () => {
         px={2}
         lineHeight={1.25}
         style={{
-          backgroundColor: "white-smoke",
+          backgroundColor: "#f8f9fa",
           borderRadius: 5,
           marginLeft: 10,
           marginRight: 11,
@@ -494,55 +556,68 @@ const Profile = () => {
           Top Products
         </Typography>
       </Box>
-      <Box p={2} display="flex" flexDirection="column">
-        <Grid item xs={12} xl={12}>
-          <div className="grid-container">
-            {products.map((ele) => (
-              <Box
-                display="flex"
-                borderRadius="lg"
-                shadow="md"
-                width="100%"
-                height="100%"
-                marginRight={10}
-                paddingBottom={1}
-              >
-                <Card sx={{ maxWidth: 345, margin: "10px", flex: "1 1 20%" }}>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={`http://localhost:4000/${ele.path[0]}`}
-                    alt="product image"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {ele.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {ele.brand}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      PKR/- {ele.price}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      onClick={() =>
-                        navigate("/home/productView", {
-                          state: { product: ele },
-                        })
-                      }
-                    >
-                      View
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Box>
-            ))}
-          </div>
-        </Grid>
-      </Box>
+      <div
+        style={{
+          backgroundColor: "#f8f9fa",
+
+          marginLeft: 10,
+          marginRight: 11,
+          flexWrap: "wrap",
+          display: "flex",
+          flexDirection: "row",
+          // borderRadius: 5,
+        }}
+      >
+        {products.map((ele) => (
+          <Box
+            // display="flex"
+            borderRadius="16px"
+            width="30%"
+            height="100%"
+            marginRight={3}
+            paddingBottom={1}
+          >
+            <Card
+              sx={{
+                maxWidth: 245,
+                margin: "10px",
+                flex: "1 1 20%",
+                boxShadow: "1px 3px 1px #9E9E9E",
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="140"
+                image={`${baseURL}/${ele.path[0]}`}
+                alt="product image"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {ele.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {ele.brand}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  PKR/- {ele.price}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  onClick={() =>
+                    navigate("/productView", {
+                      state: { product: ele },
+                    })
+                  }
+                >
+                  View
+                </Button>
+              </CardActions>
+            </Card>
+          </Box>
+        ))}
+      </div>
     </div>
   );
 };
