@@ -277,8 +277,12 @@ const AddProduct = () => {
                     hidden
                     multiple
                     required
+<<<<<<< HEAD
                     // accept="image/png , image/jpeg"
                     accept="image/*"
+=======
+                    accept="image/png , image/jpeg"
+>>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
                   />
                 </Button>
               </Grid>

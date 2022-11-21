@@ -225,6 +225,10 @@ const Profile = () => {
           style={{
             display: "flex",
             alignItems: "center",
+<<<<<<< HEAD
+=======
+            backgroundColor: "aqua",
+>>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
             flexDirection: "column",
           }}
         >
@@ -606,7 +610,11 @@ const Profile = () => {
                 <Button
                   size="small"
                   onClick={() =>
+<<<<<<< HEAD
                     navigate("/productView", {
+=======
+                    navigate("/home/productView", {
+>>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
                       state: { product: ele },
                     })
                   }
