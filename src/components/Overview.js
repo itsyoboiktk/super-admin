@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuCard from "../components/MenuCard";
 import LoyaltyOutlinedIcon from "@mui/icons-material/LoyaltyOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
@@ -7,7 +7,27 @@ import "./overview.css";
 import BarChart from "./BarChart";
 import { BarData } from "../components/BarData";
 import PieChart from "../components/PieChart";
+import axios from "axios";
+import { baseURL } from "./request";
 const Overview = () => {
+  const [totalPro, setTotalPro] = useState();
+  const [totalOrder, setTotalOrder] = useState();
+  React.useEffect(() => {
+    axios
+      .get(`${baseURL}/stats/totals`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        setTotalOrder(res.data.totalOrders);
+        setTotalPro(res.data.totalProducts);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   const [barData, setBarData] = React.useState({
     labels: BarData.map((element) => element.month),
     datasets: [
@@ -28,12 +48,12 @@ const Overview = () => {
         />
         <MenuCard
           icon={<LocalAtmOutlinedIcon fontSize="large" />}
-          option={"Total Products: Rs.245,785"}
+          option={"Total Products: " + totalPro}
           color="#e3f49a"
         />
         <MenuCard
           icon={<AssessmentOutlinedIcon fontSize="large" />}
-          option="Total Orders: 476"
+          option={"Total Orders: " + totalOrder}
           color="#ddd2ef"
         />
       </div>
