@@ -79,11 +79,7 @@ const Inventory = () => {
             <Card sx={{ maxWidth: 345, margin: "10px", flex: "1 1 20%" }}>
               <CardMedia
                 component="img"
-<<<<<<< HEAD
                 height="210"
-=======
-                height="140"
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
                 image={`${baseURL}/${element.path[0]}`}
                 alt="product image"
               />

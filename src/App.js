@@ -29,23 +29,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-<<<<<<< HEAD
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Overview />} />
-=======
-        {/* {!token ? ( */}
-        {/* <> */}
-        <Route path="/signIn" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        {/* </> */}
-        {/* ) : ( */}
-        <Route element={<PrivateRoute />}>
-          {/* <Route path="/home" element={<Layout />}> */}
-          <Route path="/" element={<Overview />} />
-          {/* <Route path="overview" element={<Overview />} /> */}
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
           <Route path="inventory" element={<Inventory />} />
           <Route path="addProduct" element={<AddProduct />} />
           <Route path="addImages" element={<AddImages />} />

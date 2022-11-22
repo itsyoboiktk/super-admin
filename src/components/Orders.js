@@ -19,10 +19,7 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-<<<<<<< HEAD
   Icon,
-=======
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Modal from "@mui/material/Modal";
@@ -222,10 +219,6 @@ function OrderTable() {
     overflow: "scroll",
   };
   return (
-<<<<<<< HEAD
-=======
-    // <Paper sx={{ width: "100%", overflow: "hidden", backgroundColor: "aqua" }}>
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
     <div
       style={{
         marginLeft: 10,
@@ -233,10 +226,6 @@ function OrderTable() {
         flexWrap: "wrap",
         display: "flex",
         flexDirection: "row",
-<<<<<<< HEAD
-=======
-        // borderRadius: 5,
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
       }}
     >
       <Modal
@@ -245,7 +234,6 @@ function OrderTable() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-<<<<<<< HEAD
         <Box sx={style}>
           <Typography variant="h6" color="text.primary" textAlign="center">
             Order Detail
@@ -327,87 +315,6 @@ function OrderTable() {
           >
             Dispatch Order
           </Button>
-=======
-        <Box
-          sx={{
-            position: "absolute",
-            top: "40%",
-            left: "55%",
-            transform: "translate(-50%, -50%)",
-            width: "60%",
-            border: "1px solid",
-            borderRadius: "10px",
-          }}
-        >
-          <Paper style={{ padding: "40px 20px", overflow: "auto" }}>
-            <Grid
-              container
-              wrap="nowrap"
-              spacing={2}
-              style={{ overflow: "auto" }}
-            >
-              <Grid justifyContent="left" item xs zeroMinWidth>
-                {
-                  // eslint-disable-next-line no-shadow
-                  ordersD.map((ele) => (
-                    <Card
-                      sx={{
-                        maxWidth: "80%",
-                        flex: "1 1 20%",
-                        display: "flex",
-                        flexDirection: "row",
-                        padding: "10px",
-                        boxShadow: "1px 3px 1px 3px #9E9E9E",
-                      }}
-                    >
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={`${baseURL}/${ele.productId.path[0]}`}
-                        alt="product image"
-                        sx={{
-                          maxWidth: "20%",
-                          maxHeight: "30%",
-                          borderRadius: "10px",
-                        }}
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          {ele.productId.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {ele.productId.brand}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {ele.productId.price}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Size: {ele.size}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Description: {ele.productId.desc}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  ))
-                }
-                <Button
-                  onClick={() => updateStatus(orderID)}
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  style={{
-                    backgroundColor: "#45464c",
-                    textTransform: "capitalize",
-                    fontfamily:
-                      "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
-                  }}
-                >
-                  Dispatch Order
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
         </Box>
       </Modal>
       <Box

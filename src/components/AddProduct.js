@@ -74,7 +74,6 @@ const AddProduct = () => {
       let i = newArr.indexOf(event);
       newArr.splice(i, 1);
       setSizes(newArr);
-      console.log("hello", sizes);
     }
   };
   const handleSubmit = (event) => {
@@ -134,7 +133,12 @@ const AddProduct = () => {
           <Typography component="h1" variant="h6">
             Add New Product
           </Typography>
-          <Box component="form" validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -277,12 +281,18 @@ const AddProduct = () => {
                     hidden
                     multiple
                     required
-<<<<<<< HEAD
-                    // accept="image/png , image/jpeg"
                     accept="image/*"
-=======
-                    accept="image/png , image/jpeg"
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
+                  />
+                </Button>
+                <Button variant="contained" component="label">
+                  Virtual Try On
+                  <input
+                    type="file"
+                    name="png"
+                    hidden
+                    multiple
+                    required
+                    accept="image/png"
                   />
                 </Button>
               </Grid>

@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
-import { Divider, Paper } from "@mui/material";
+import { CardHeader, Divider, Paper } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
@@ -212,38 +212,6 @@ const Profile = () => {
 
   return (
     <div style={{ paddingTop: 20 }}>
-      <Card
-        sx={{
-          position: "relative",
-          mx: 3,
-          py: 2,
-          px: 2,
-          backgroundColor: "#f8f9fa",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-<<<<<<< HEAD
-=======
-            backgroundColor: "aqua",
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
-            flexDirection: "column",
-          }}
-        >
-          <Avatar sx={{}} onClick={() => handleOpen3()}>
-            DP
-          </Avatar>
-          <Typography variant="h5" fontWeight="medium">
-            {shop.managers.name}
-          </Typography>
-          <Typography variant="button" color="text" fontWeight="regular">
-            Manager
-          </Typography>
-        </div>
-      </Card>
-
       <Box mt={5} mb={3}>
         <Grid container spacing={0}>
           <Card
@@ -252,20 +220,174 @@ const Profile = () => {
               mx: 3,
               py: 2,
               px: 2,
-              flex: "1 1 20%",
               backgroundColor: "#f8f9fa",
+              width: "60%",
             }}
           >
-            <CardContent>
-              {/* <Paper style={{ padding: "40px 20px", overflow: "auto" }}> */}
-              <Typography gutterBottom variant="h4" component="div">
-                {shop.companyName}
-              </Typography>
+            <CardHeader
+              title={
+                <Typography gutterBottom variant="h4" component="div">
+                  Edit Profile
+                </Typography>
+              }
+            />
 
-              <Grid justifyContent="left" item xs zeroMinWidth>
-                <h4 style={{ margin: 0, textAlign: "left" }}></h4>
-                <p style={{ textAlign: "left" }}>{shop.bio}</p>
-              </Grid>
+            <CardContent>
+              <Paper style={{ padding: "40px 20px", overflow: "auto" }}>
+                <Box
+                  alignItems="center"
+                  component="form"
+                  validate
+                  onSubmit={handleSubmit}
+                  sx={{ mt: 3 }}
+                >
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="company"
+                        label="Company"
+                        name="company"
+                        autoFocus
+                        autoComplete="Company"
+                        value={comp}
+                        onChange={handleChangeComp}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="bio"
+                        label="Shop Info"
+                        name="bio"
+                        autoComplete="bio"
+                        value={bio}
+                        onChange={handleChangeBio}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        autoComplete="given-name"
+                        name="firstName"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="Manager Name"
+                        autoFocus
+                        value={manName}
+                        onChange={handleChangeMan}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        autoComplete="given-name"
+                        name="firstName"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="Manger Name"
+                        autoFocus
+                        value={manName}
+                        onChange={handleChangeMan}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="House"
+                        label="House"
+                        name="house"
+                        autoComplete="House"
+                        value={house}
+                        onChange={handleChangeHouse}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="Street"
+                        label="Street"
+                        name="street"
+                        autoComplete="Street"
+                        value={street}
+                        onChange={handleChangeStreet}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="Sector"
+                        label="Sector"
+                        name="sector"
+                        autoComplete="Sector"
+                        value={sector}
+                        onChange={handleChangeSector}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="City"
+                        label="City"
+                        name="city"
+                        autoComplete="City"
+                        value={city}
+                        onChange={handleChangeCity}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+                  <Button
+                    type="Proceed"
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Update
+                  </Button>
+                </Box>
+              </Paper>
+            </CardContent>
+          </Card>
+
+          <Card
+            sx={{
+              position: "relative",
+              mx: 3,
+              py: 2,
+              px: 2,
+              backgroundColor: "#f8f9fa",
+              width: "30%",
+              height: "60%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <Avatar
+                sx={{ width: 100, height: 100 }}
+                onClick={() => handleOpen3()}
+              >
+                DP
+              </Avatar>
+              <Typography sx={{ py: 1 }} variant="h5" fontWeight="medium">
+                {shop.managers.name}
+              </Typography>
+              <Typography variant="button" color="text" fontWeight="regular">
+                Manager
+              </Typography>
+              <Typography variant="button" color="text" fontWeight="regular">
+                {shop.bio}
+              </Typography>
               <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
               <Stack
                 direction="row"
@@ -273,10 +395,6 @@ const Profile = () => {
                 sx={{ display: "flex", alignItems: "center" }}
               >
                 <EmailIcon />
-
-                <Typography gutterBottom variant="h6" component="div">
-                  Email:
-                </Typography>
                 <Typography variant="h6" className="text-muted">
                   {shop.managers.email}
                 </Typography>
@@ -286,12 +404,9 @@ const Profile = () => {
                 spacing={1}
                 sx={{ display: "flex", alignItems: "center" }}
               >
-                <LocationCityIcon />
-                <Typography gutterBottom variant="h6" component="div">
-                  Building:
-                </Typography>
+                <ContactPhoneIcon />
                 <Typography variant="h6" className="text-muted">
-                  {shop.address.house}
+                  {shop.managers.phone}
                 </Typography>
               </Stack>
               <Stack
@@ -300,150 +415,20 @@ const Profile = () => {
                 sx={{ display: "flex", alignItems: "center" }}
               >
                 <SignpostIcon />
-                <Typography gutterBottom variant="h6" component="div">
-                  Street:
-                </Typography>
                 <Typography variant="h6" className="text-muted">
-                  {shop.address.street + ", "} {shop.address.sector + " "}
+                  {shop.address.house + " "} {shop.address.street + ", "}{" "}
+                  {shop.address.sector + " "}
                 </Typography>
               </Stack>
               <Typography gutterBottom variant="h6">
                 <LocationOnIcon />
                 {shop.address.city}
               </Typography>
-              <Stack
-                direction="row"
-                spacing={1}
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <ContactPhoneIcon />
-                <Typography gutterBottom variant="h6" component="div">
-                  Phone:
-                </Typography>
-                <Typography variant="h6" className="text-muted">
-                  {shop.managers.phone}
-                </Typography>
-              </Stack>
-              {/* </Paper> */}
-            </CardContent>
-            <CardActions>
-              <Button onClick={() => handleOpen()}>Edit Profile</Button>
-              <Button onClick={() => handleOpen2()}>Change Password</Button>
-            </CardActions>
+            </div>
           </Card>
         </Grid>
       </Box>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box bgColor="light" coloredShadow="dark" sx={style2}>
-          <Paper style={{ padding: "40px 20px", overflow: "auto" }}>
-            <Box
-              alignItems="center"
-              component="form"
-              validate
-              onSubmit={handleSubmit}
-              sx={{ mt: 3 }}
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                    value={manName}
-                    onChange={handleChangeMan}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="company"
-                    label="Company"
-                    name="company"
-                    autoComplete="Company"
-                    value={comp}
-                    onChange={handleChangeComp}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="bio"
-                    label="Shop Info"
-                    name="bio"
-                    autoComplete="bio"
-                    value={bio}
-                    onChange={handleChangeBio}
-                  />
-                </Grid>
 
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="House"
-                    label="House"
-                    name="house"
-                    autoComplete="House"
-                    value={house}
-                    onChange={handleChangeHouse}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="Street"
-                    label="Street"
-                    name="street"
-                    autoComplete="Street"
-                    value={street}
-                    onChange={handleChangeStreet}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="Sector"
-                    label="Sector"
-                    name="sector"
-                    autoComplete="Sector"
-                    value={sector}
-                    onChange={handleChangeSector}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="City"
-                    label="City"
-                    name="city"
-                    autoComplete="City"
-                    value={city}
-                    onChange={handleChangeCity}
-                  />
-                </Grid>
-              </Grid>
-              <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-              <Button type="Proceed" variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Update
-              </Button>
-            </Box>
-          </Paper>
-        </Box>
-      </Modal>
       <Modal
         open={open2}
         onClose={handleClose2}
@@ -610,11 +595,7 @@ const Profile = () => {
                 <Button
                   size="small"
                   onClick={() =>
-<<<<<<< HEAD
                     navigate("/productView", {
-=======
-                    navigate("/home/productView", {
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
                       state: { product: ele },
                     })
                   }

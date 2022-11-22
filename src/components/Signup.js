@@ -13,11 +13,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { baseURL } from "./request";
-<<<<<<< HEAD
 import { Navigate, useNavigate } from "react-router-dom";
 
-=======
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
 function Copyright(props) {
   return (
     <Typography
@@ -62,7 +59,6 @@ const SignUp = () => {
       phone: data.get("phone"),
       country: "Pakistan",
     };
-<<<<<<< HEAD
     axios
       .post(`${baseURL}/manager/register`, newMan)
       .then((res) => {
@@ -72,11 +68,6 @@ const SignUp = () => {
       .catch((e) => {
         console.log(e);
       });
-=======
-    axios.post(`${baseURL}/manager/register`, newMan).then((res) => {
-      console.log(res);
-    });
->>>>>>> e366746c69408fbcc4e61f88f8891a44dcb7c0ea
   };
 
   return (
