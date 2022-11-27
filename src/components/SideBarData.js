@@ -1,6 +1,6 @@
 import PieChartIcon from "@mui/icons-material/PieChart";
 import ReceiptIcon from "@mui/icons-material/Receipt";
-import AssessmentIcon from "@mui/icons-material/Assessment";
+import AssignmentReturnIcon from "@mui/icons-material/AssignmentReturn";
 import SettingsIcon from "@mui/icons-material/Settings";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AddIcon from "@mui/icons-material/Add";
@@ -16,6 +16,11 @@ export const SideBarData = [
     title: "Orders",
     icon: <ReceiptIcon />,
     link: "/orders",
+  },
+  {
+    title: "Returned Orders",
+    icon: <AssignmentReturnIcon />,
+    link: "/returned",
   },
   {
     title: "Inventory",

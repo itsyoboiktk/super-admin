@@ -3,6 +3,9 @@
     
     display: flex;
     flex-direction: column;
+    background-color: aqua;
+    /* padding: 5px; */
+    align-self: auto;
   
     
 }
@@ -41,3 +44,24 @@
 .overview .recent{
 flex: 20%;
 }
+
+.card-body{
+    padding: 15px 15px 0px;
+}
+.card-footer{
+    padding: 0px 15px 10px 15px;
+}
+.numbers{
+    font-size: 1.8rem;
+    text-align: right;
+}
+.icon-big{
+    font-size: 3em;
+    min-height: 64px;
+}
+.card{
+    padding : 10px;
+    margin: 3px;
+
+}
+

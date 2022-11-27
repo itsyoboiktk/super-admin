@@ -14,6 +14,7 @@ import Inventory from "./components/Inventory";
 import ProductView from "./components/ProductView";
 import Orders from "./components/Orders";
 import Profile from "./components/Profile";
+import Returned from "./components/Returned";
 import React from "react";
 import PrivateRoute from "./PrivateRoute";
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="updateProduct" element={<UpdateProduct />} />
           <Route path="orders" element={<Orders />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="returned" element={<Returned />} />
         </Route>
         {/* // </Route> */}
         {/* )} */}

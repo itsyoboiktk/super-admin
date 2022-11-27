@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MenuCard from "../components/MenuCard";
-import LoyaltyOutlinedIcon from "@mui/icons-material/LoyaltyOutlined";
+import PriceChangeIcon from "@mui/icons-material/PriceChange";
+import CachedIcon from "@mui/icons-material/Cached";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import "./overview.css";
@@ -8,9 +9,16 @@ import BarChart from "./BarChart";
 import { BarData } from "../components/BarData";
 import PieChart from "../components/PieChart";
 
-import { Card, Row, Col } from "react-bootstrap";
-// import { Card, CardContent, Box, Typography } from "@mui/material";
-// import Divider from "@mui/material/Divider";
+// import { Card, Row, Col } from "react-bootstrap";
+import {
+  Card,
+  CardContent,
+  Box,
+  Typography,
+  Stack,
+  CardMedia,
+} from "@mui/material";
+import Divider from "@mui/material/Divider";
 import axios from "axios";
 import { baseURL } from "./request";
 const Overview = () => {
@@ -42,149 +50,170 @@ const Overview = () => {
       },
     ],
   });
+
+  const style = {
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+  };
   return (
     <div className="overview">
-      <div className="card">
-        {/* <Card sx={{ display: "flex", width: 1 / 3 }}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <CardContent>
-              <LoyaltyOutlinedIcon fontSize="large" />
-              <Typography sx={{ justifyContent: "right" }}>
-                Total Sales: Rs. 45,000
-              </Typography>
-              <Divider />
-              <Typography>update now</Typography>
-            </CardContent>
-          </Box>
-        </Card> */}
-        <Row>
-          <Col lg="3" sm="6">
-            <Card className="card-stats">
-              <Card.Body>
-                <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-chart text-warning"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Number</p>
-                      <Card.Title as="h4">150GB</Card.Title>
-                    </div>
-                  </Col>
-                </Row>
-              </Card.Body>
-              <Card.Footer>
-                <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
+      <Box sx={style}>
+        <Typography variant="h6" color="text.primary" textAlign="center">
+          Analytics (Iski Stlying karni hai)
+        </Typography>
+        <div className="card">
+          <Card
+            sx={{
+              display: "flex",
+              width: 1 / 5,
+              marginRight: "6%",
+              border: "1px",
+              height: 170,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              <CardContent>
+                <Stack direction="row" spacing={5} sx={{ display: "flex" }}>
+                  <PriceChangeIcon fontSize="large" />
+                  <Typography inline variant="body1" align="right">
+                    Total Sales:
+                  </Typography>
+                </Stack>
+                <Typography inline variant="h5" align="right">
+                  Rs. 45,000
+                </Typography>
+                <Divider variant="middle" component="li" />
+                <Typography inline variant="body1" align="right">
                   Update Now
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col lg="3" sm="6">
-            <Card className="card-stats">
-              <Card.Body>
-                <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-light-3 text-success"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Revenue</p>
-                      <Card.Title as="h4">$ 1,345</Card.Title>
-                    </div>
-                  </Col>
-                </Row>
-              </Card.Body>
-              <Card.Footer>
-                <hr></hr>
-                <div className="stats">
-                  <i className="far fa-calendar-alt mr-1"></i>
-                  Last day
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col lg="3" sm="6">
-            <Card className="card-stats">
-              <Card.Body>
-                <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-vector text-danger"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Errors</p>
-                      <Card.Title as="h4">23</Card.Title>
-                    </div>
-                  </Col>
-                </Row>
-              </Card.Body>
-              <Card.Footer>
-                <hr></hr>
-                <div className="stats">
-                  <i className="far fa-clock-o mr-1"></i>
-                  In the last hour
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col lg="3" sm="6">
-            <Card className="card-stats">
-              <Card.Body>
-                <Row>
-                  <Col xs="5">
-                    <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-favourite-28 text-primary"></i>
-                    </div>
-                  </Col>
-                  <Col xs="7">
-                    <div className="numbers">
-                      <p className="card-category">Followers</p>
-                      <Card.Title as="h4">+45K</Card.Title>
-                    </div>
-                  </Col>
-                </Row>
-              </Card.Body>
-              <Card.Footer>
-                <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-redo mr-1"></i>
-                  Update now
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-        {/* <MenuCard
-          icon={<LocalAtmOutlinedIcon fontSize="large" />}
-          option={"Total Products: " + totalPro}
-          color="#e3f49a"
-        />
-        <MenuCard
-          icon={<AssessmentOutlinedIcon fontSize="large" />}
-          option={"Total Orders: " + totalOrder}
-          color="#ddd2ef"
-        /> */}
-      </div>
-      <div className="charts">
-        <div className="bar">
-          <BarChart salesData={barData} />
+                  <CachedIcon />
+                </Typography>
+              </CardContent>
+            </Box>
+          </Card>
+          <Card
+            sx={{
+              display: "flex",
+              width: 1 / 5,
+              marginRight: "6%",
+              border: "1px",
+              height: 170,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              <CardMedia
+                component="img"
+                sx={{ width: 100 }}
+                img="/src/components/assets/priceTag.png"
+                alt="Price Tag"
+              />
+
+              <CardContent>
+                <Typography inline variant="body1" align="right">
+                  Total Sales:
+                </Typography>
+
+                <Typography inline variant="h5" align="right">
+                  Rs. 45,000
+                </Typography>
+                <Divider variant="middle" component="li" />
+                <Typography inline variant="body1" align="right">
+                  Update Now
+                  <CachedIcon />
+                </Typography>
+              </CardContent>
+            </Box>
+          </Card>
+          <Card
+            sx={{
+              display: "flex",
+              width: 1 / 5,
+              border: "1px",
+              marginRight: "6%",
+              height: 170,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              <CardContent>
+                <Stack direction="row" spacing={9.5} sx={{ display: "flex" }}>
+                  <PriceChangeIcon fontSize="large" />
+                  <Typography inline variant="body1" align="right">
+                    Total Orders:
+                  </Typography>
+                </Stack>
+                <Typography inline variant="h5" align="right">
+                  500
+                </Typography>
+                <Divider variant="middle" component="li" />
+                <Typography inline variant="body1" align="right">
+                  New Orders
+                  <CachedIcon />
+                </Typography>
+              </CardContent>
+            </Box>
+          </Card>
+          <Card
+            sx={{
+              display: "flex",
+              width: 1 / 5,
+              border: "1px",
+              marginRight: "1%",
+              height: 170,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: "100%",
+              }}
+            >
+              <CardContent>
+                <Stack direction="row" spacing={4} sx={{ display: "flex" }}>
+                  <PriceChangeIcon fontSize="large" />
+                  <Typography inline variant="body1" align="right">
+                    Orders Returned:
+                  </Typography>
+                </Stack>
+                <Typography inline variant="h5" align="right">
+                  4
+                </Typography>
+                <Divider variant="middle" component="li" />
+                <Typography inline variant="body1" align="right">
+                  New Orders
+                  <CachedIcon />
+                </Typography>
+              </CardContent>
+            </Box>
+          </Card>
         </div>
-        <div className="pie">
-          <PieChart salesData={barData} />
+        <div className="charts">
+          <div className="bar">
+            <BarChart salesData={barData} />
+          </div>
+          <div className="pie">
+            <PieChart salesData={barData} />
+          </div>
         </div>
-      </div>
-      {/* <div className="recent">
-        
-      </div> */}
+      </Box>
     </div>
   );
 };
