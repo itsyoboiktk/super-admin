@@ -24,7 +24,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="#">
-        SneakAR
+        Sneakers
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
