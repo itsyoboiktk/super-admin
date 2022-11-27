@@ -84,7 +84,7 @@ export default function SignIn() {
             sx={{ width: 80, height: 80 }}
           />{" "}
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign in as Super Admin
           </Typography>
           <Box
             component="form"
