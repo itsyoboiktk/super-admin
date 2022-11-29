@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import "./inventory.css";
+import "./stores.css";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
 import { baseURL } from "./request";
 
-const Inventory = () => {
+const Stores = () => {
   const navigate = useNavigate();
   const [products, setProducts] = React.useState([]);
   const [open, setOpen] = React.useState(false);
@@ -98,7 +98,7 @@ const Inventory = () => {
                 <Button
                   size="small"
                   onClick={() =>
-                    navigate("/productView", {
+                    navigate("/storeDetail", {
                       state: { product: element },
                     })
                   }
@@ -143,4 +143,4 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+export default Stores;

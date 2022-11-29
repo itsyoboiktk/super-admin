@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./productView.css";
+import "./storeDetail.css";
 
 import { Button, Grid, Divider, Paper } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -15,7 +15,7 @@ import ReviewsIcon from "@mui/icons-material/Reviews";
 import axios from "axios";
 import { baseURL } from "./request";
 
-const ProductView = () => {
+const StoreDetail = () => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -97,7 +97,7 @@ const ProductView = () => {
   };
   return (
     <div className="product_container">
-      <Modal
+      {/* <Modal
         open={open2}
         onClose={handleClose2}
         aria-labelledby="modal-modal-title"
@@ -176,9 +176,9 @@ const ProductView = () => {
             )}
           </Box>
         </div>
-      </Modal>
+      </Modal> */}
 
-      <div className="product_card">
+      {/* <div className="product_card">
         <div className="slider">
           <button className="btn" onClick={() => pressLeft()}>
             <ArrowBackIosNewIcon />
@@ -197,9 +197,9 @@ const ProductView = () => {
             <ArrowForwardIosIcon />
           </button>
         </div>
-      </div>
+      </div> */}
 
-      <div className="desc">
+      {/* <div className="desc">
         <h1 style={{ fontWeight: "1000", fontSize: 50 }}>{product.title}</h1>
         <p>Brand: {product.brand}</p>
         <p>Available Quantity: {product.quantity}</p>
@@ -264,8 +264,8 @@ const ProductView = () => {
             View Reviews
           </Button>
         </div>
-      </div>
-      <Modal
+      </div> */}
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -280,9 +280,10 @@ const ProductView = () => {
             <Button onClick={() => handleClose()}>No</Button>
           </div>
         </Box>
-      </Modal>
+      </Modal> */}
+      <p> this is store details page</p>
     </div>
   );
 };
 
-export default ProductView;
+export default StoreDetail;

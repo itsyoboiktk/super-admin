@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import MenuCard from "../components/MenuCard";
+
 import PriceChangeIcon from "@mui/icons-material/PriceChange";
 import CachedIcon from "@mui/icons-material/Cached";
-import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
-import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
-import "./overview.css";
+
+import "./analytics.css";
 import BarChart from "./BarChart";
 import { BarData } from "../components/BarData";
 import PieChart from "../components/PieChart";
 
-// import { Card, Row, Col } from "react-bootstrap";
 import {
   Card,
   CardContent,
@@ -21,7 +19,8 @@ import {
 import Divider from "@mui/material/Divider";
 import axios from "axios";
 import { baseURL } from "./request";
-const Overview = () => {
+
+const Analytics = () => {
   const [totalPro, setTotalPro] = useState();
   const [totalOrder, setTotalOrder] = useState();
   React.useEffect(() => {
@@ -57,7 +56,7 @@ const Overview = () => {
     p: 4,
   };
   return (
-    <div className="overview">
+    <div className="front">
       <Box sx={style}>
         <Typography variant="h6" color="text.primary" textAlign="center">
           Analytics (Iski Stlying karni hai)
@@ -218,4 +217,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default Analytics;

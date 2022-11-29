@@ -9,9 +9,9 @@ import {
   Button,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import "./returned.css";
+import "./report.css";
 
-const Returned = () => {
+const Report = () => {
   const style = {
     bgcolor: "background.paper",
     boxShadow: 24,
@@ -24,7 +24,7 @@ const Returned = () => {
     <div className="test">
       <Box sx={style}>
         <Typography variant="h6" color="text.primary" textAlign="center">
-          Returned Orders
+          Reported Shoes
         </Typography>
         <Card
           sx={{
@@ -208,4 +208,4 @@ const Returned = () => {
   );
 };
 
-export default Returned;
+export default Report;

@@ -8,7 +8,7 @@ const Nav = () => {
     <div className="navbar">
       <div id="text">
         <Avatar alt="SneakerLogo" src="../sneaklogo.png" />
-        <h4 style={{ color: "white", fontWeight: "600" }}>SneakAR</h4>
+        <h4 style={{ color: "white", fontWeight: "600" }}>Sneakers</h4>
       </div>
       <div id="icon">
         <NotificationsIcon

@@ -104,7 +104,7 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function OrderTable() {
+function UserTable() {
   const [orders, setOrders] = React.useState([]);
   const [ordersD, setOrdersD] = React.useState([]);
   const [orderID, setOrderID] = React.useState();
@@ -327,7 +327,7 @@ function OrderTable() {
         }}
       >
         <Typography variant="h6" color="white">
-          Orders Management
+          Users Management
         </Typography>
       </Box>
       <TableContainer
@@ -398,4 +398,4 @@ function OrderTable() {
   );
 }
 
-export default OrderTable;
+export default UserTable;
