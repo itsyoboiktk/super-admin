@@ -3,7 +3,7 @@
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useTheme, styled } from "@mui/material/styles";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
@@ -13,13 +13,9 @@ import {
   TableBody,
   TableRow,
   TableFooter,
-  Grid,
-  Paper,
   Typography,
   CardMedia,
   CardContent,
-  CardActions,
-  Icon,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Modal from "@mui/material/Modal";
@@ -105,7 +101,7 @@ TablePaginationActions.propTypes = {
 };
 
 function UserTable() {
-  const [orders, setOrders] = React.useState([]);
+  const [users, setUsers] = React.useState([]);
   const [ordersD, setOrdersD] = React.useState([]);
   const [orderID, setOrderID] = React.useState();
   const [address, setAddress] = React.useState({});
@@ -117,45 +113,17 @@ function UserTable() {
     setOrderID(idO);
     setOpen2(true);
   };
-  console.log(orderID);
+
   const handleClose2 = () => setOpen2(false);
 
-  const updateStatus = (val) => {
-    console.log("Hello in update", val);
-
-    const updated = {
-      id: val,
-      status: "completed",
-    };
-    console.log(updated);
-    sendData(updated);
-  };
-
-  const sendData = (data) => {
-    axios
-      .put(`${baseURL}/order/update`, data, {
-        // headers: {
-        //   Authorization: localStorage.getItem("token"),
-        // },
-      })
-      .then((res) => {
-        setOpen2(false);
-      })
-      .catch((e) => {
-        consol.log(e);
-      });
-  };
+  //backend pae banana hai users ka sara display ka data
 
   React.useEffect(() => {
     axios
-      .get(`${baseURL}/order/display`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
+      .get(`${baseURL}/admin/users/display`)
       .then((res) => {
         console.log(res.data);
-        setOrders(res.data);
+        setUsers(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -197,27 +165,7 @@ function UserTable() {
       border: 0,
     },
   }));
-  const calTotal = () => {
-    let total = 0;
-    ordersD.map((el, i) => {
-      total = total + +el.productId.price;
-    });
-    console.log(total);
-    return total;
-  };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
-    maxHeight: 600,
-    overflow: "scroll",
-  };
   return (
     <div
       style={{
@@ -228,7 +176,7 @@ function UserTable() {
         flexDirection: "row",
       }}
     >
-      <Modal
+      {/* <Modal
         open={open2}
         onClose={handleClose2}
         aria-labelledby="modal-modal-title"
@@ -316,7 +264,7 @@ function UserTable() {
             Dispatch Order
           </Button>
         </Box>
-      </Modal>
+      </Modal> */}
       <Box
         sx={{
           m: 2,
@@ -336,20 +284,19 @@ function UserTable() {
         <Table aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Order ID</StyledTableCell>
-              <StyledTableCell>Order Date</StyledTableCell>
-              <StyledTableCell>Order Time</StyledTableCell>
-              <StyledTableCell>Payment Method</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
+              <StyledTableCell>Name</StyledTableCell>
+              <StyledTableCell>Email</StyledTableCell>
+              <StyledTableCell>Phone No.</StyledTableCell>
+              <StyledTableCell>Age</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? orders.slice(
+              ? users.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : orders
+              : users
             ).map((ele) => (
               <StyledTableRow
                 key={ele.id}
@@ -357,11 +304,10 @@ function UserTable() {
                 // align={column.align}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <StyledTableCell>{ele._id}</StyledTableCell>
-                <StyledTableCell>{ele.orderDate}</StyledTableCell>
-                <StyledTableCell>{ele.orderTime}</StyledTableCell>
-                <StyledTableCell>{ele.paymentMethod}</StyledTableCell>
-                <StyledTableCell>{ele.status.toUpperCase()}</StyledTableCell>
+                <StyledTableCell>{ele.name}</StyledTableCell>
+                <StyledTableCell>{ele.email}</StyledTableCell>
+                <StyledTableCell>{ele.phone}</StyledTableCell>
+                <StyledTableCell>{ele.age}</StyledTableCell>
               </StyledTableRow>
             ))}
             {emptyRows > 0 && (
@@ -376,7 +322,7 @@ function UserTable() {
                 sx={{ width: "100%" }}
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 colSpan={3}
-                count={orders.length}
+                count={users.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

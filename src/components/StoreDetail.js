@@ -2,286 +2,239 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./storeDetail.css";
 
-import { Button, Grid, Divider, Paper } from "@mui/material";
+import { Button, Grid, Divider, Paper, Card } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
 import Modal from "@mui/material/Modal";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import Rating from "@mui/material/Rating";
-import DeleteIcon from "@mui/icons-material/Delete";
-import UpgradeIcon from "@mui/icons-material/Upgrade";
-import ReviewsIcon from "@mui/icons-material/Reviews";
+import Stack from "@mui/material/Stack";
+import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import SignpostIcon from "@mui/icons-material/Signpost";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EmailIcon from "@mui/icons-material/Email";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CardActions from "@mui/material/CardActions";
 import axios from "axios";
 import { baseURL } from "./request";
 
 const StoreDetail = () => {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "white",
-    borderRadius: "10px",
-    boxShadow: 25,
-    p: 4,
-  };
   const { state } = useLocation();
-  const navigate = useNavigate();
-  const product = state.product;
-  const [open, setOpen] = React.useState(false);
-  const [reviews, setReviews] = React.useState([]);
-  const [open2, setOpen2] = React.useState(false);
+  const store = state.store;
 
-  const [img, setImg] = React.useState([]);
-  const handleOpen2 = () => {
-    setOpen2(true);
-  };
-
-  const handleClose2 = () => setOpen2(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => setOpen(false);
-
-  const reviewClicked = () => {
-    axios
-      .get(`${baseURL}/review/get/${product._id}`)
-      .then((res) => {
-        setReviews(res.data);
-        handleOpen2();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  React.useEffect(() => {
-    setImg(product.path);
-  }, []);
-  const [imgNum, setImgNum] = React.useState(0);
-
-  const pressLeft = () => {
-    if (imgNum == 0) {
-      setImgNum(img.length - 1);
-    } else {
-      setImgNum(imgNum - 1);
-    }
-    console.log(imgNum);
-  };
-
-  const pressRight = () => {
-    if (imgNum < img.length - 1) {
-      setImgNum(imgNum + 1);
-    } else {
-      setImgNum(0);
-    }
-    console.log(imgNum);
-  };
-  const deleteProduct = () => {
-    axios
-      .delete(`${baseURL}/product/delete/${product._id}`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        console.log("here", res);
-        setOpen(false);
-        navigate("/inventory");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   return (
-    <div className="product_container">
-      {/* <Modal
-        open={open2}
-        onClose={handleClose2}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+    <div className="page">
+      <Box
+        sx={{
+          width: "100%",
+          mt: "10px",
+        }}
       >
-        <div className="Modal_Rev">
-          <Box
-            sx={{
-              position: "absolute",
-              top: "40%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "80%",
-              bgcolor: "white",
-              border: "1px solid",
-              borderRadius: "10px",
-              // p: 5,
-            }}
-          >
-            {reviews.length >= 1 ? (
-              reviews.map((ele) => (
-                <Paper
-                  style={{
-                    padding: "40px 20px",
-                    maxHeight: 400,
-                    overflow: "auto",
-                  }}
-                >
-                  <Grid container wrap="nowrap" spacing={2}>
-                    <Grid justifyContent="left" item xs zeroMinWidth>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <h4 style={{ margin: 0, textAlign: "left" }}>
-                          {ele.user.name}
-                        </h4>
-                        <Rating
-                          name="half-rating"
-                          defaultValue={ele.rating}
-                          disabled
-                          size="large"
-                        />
-                      </div>
-                      <p style={{ textAlign: "left" }}>{ele.comment}</p>
-                    </Grid>
-                  </Grid>
-                  <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-                </Paper>
-              ))
-            ) : (
-              <Paper
-                style={{
-                  padding: "40px 20px",
-                  maxHeight: 400,
-
-                  overflow: "auto",
-                }}
-              >
-                <Grid
-                  container
-                  wrap="nowrap"
-                  spacing={2}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <h3>No reviews yet!</h3>
-                </Grid>
-              </Paper>
-            )}
-          </Box>
-        </div>
-      </Modal> */}
-
-      {/* <div className="product_card">
-        <div className="slider">
-          <button className="btn" onClick={() => pressLeft()}>
-            <ArrowBackIosNewIcon />
-          </button>
-          <img
-            src={`${baseURL}/${img[imgNum]}`}
-            style={{
-              objectFit: "contain",
-              maxWidth: "600px",
-              maxHeight: "600px",
-              minHeight: "600px",
-              minWidth: "600px",
-            }}
-          />
-          <button className="btn" onClick={() => pressRight()}>
-            <ArrowForwardIosIcon />
-          </button>
-        </div>
-      </div> */}
-
-      {/* <div className="desc">
-        <h1 style={{ fontWeight: "1000", fontSize: 50 }}>{product.title}</h1>
-        <p>Brand: {product.brand}</p>
-        <p>Available Quantity: {product.quantity}</p>
-        <p>Category: {product.category}</p>
-        <p>For: {product.gender}</p>
-        <p>Available sizes:</p>
-        <h4 style={{ fontWeight: "600" }}>
-          Price:{"  "}
-          {"Rs.  "}
-          {product.price}
-        </h4>
-        <Rating name="half-rating" defaultValue={4} size="large" disabled />
-
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid justifyContent="left" item xs zeroMinWidth>
-            <h4 style={{ margin: 0, textAlign: "left" }}>Product Info: </h4>
-            <p style={{ textAlign: "left" }}>{product.desc}</p>
-          </Grid>
-        </Grid>
-
-        <div
-          style={{
-            height: "2px",
-            backgroundColor: "black ",
-            marginTop: "5%",
-            marginBottom: "5%",
-          }}
-        ></div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "80%",
+        <Card
+          sx={{
+            position: "relative",
+            py: 2,
           }}
         >
-          <Button
-            style={{ marginBottom: "10px" }}
-            variant="outlined"
-            startIcon={<DeleteIcon />}
-            onClick={() => handleOpen()}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
           >
-            Delete
-          </Button>
-          <Button
-            style={{ marginBottom: "10px" }}
-            variant="outlined"
-            startIcon={<UpgradeIcon />}
-            onClick={() =>
-              navigate("/updateProduct", {
-                state: { product: product },
-              })
-            }
-          >
-            Update
-          </Button>
-          <Button
-            onClick={() => reviewClicked()}
-            style={{ marginBottom: "10px" }}
-            variant="outlined"
-            startIcon={<ReviewsIcon />}
-          >
-            View Reviews
-          </Button>
-        </div>
-      </div> */}
-      {/* <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Are you sure you want to delete this item?
-          </Typography>
-          <div style={{ flexDirection: "row" }}>
-            <Button onClick={() => deleteProduct()}>Yes</Button>
-            <Button onClick={() => handleClose()}>No</Button>
+            <Avatar>DP</Avatar>
+            <Typography variant="h5" fontWeight="medium">
+              {store.companyName}
+            </Typography>
+            <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+            <Typography variant="h5" fontWeight="medium">
+              Store Bio
+            </Typography>
           </div>
+        </Card>
+
+        <div className="card">
+          <Box mt={2} mb={2} sx={{ width: "50%" }}>
+            <Grid container spacing={0}>
+              <Card
+                sx={{
+                  position: "relative",
+                  mx: 3,
+                  py: 2,
+                  flex: "1 1 20%",
+                }}
+              >
+                <CardContent>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <EmailIcon />
+
+                    <Typography gutterBottom variant="h6" component="div">
+                      Email:
+                    </Typography>
+                    <Typography variant="h6" className="text-muted">
+                      testing@gmail.com
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <LocationCityIcon />
+                    <Typography gutterBottom variant="h6" component="div">
+                      Building:
+                    </Typography>
+                    <Typography variant="h6" className="text-muted">
+                      Testing Address
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <SignpostIcon />
+                    <Typography gutterBottom variant="h6" component="div">
+                      Street:
+                    </Typography>
+                    <Typography variant="h6" className="text-muted">
+                      Testing Address two
+                    </Typography>
+                  </Stack>
+                  <Typography gutterBottom variant="h6">
+                    <LocationOnIcon />
+                    Testing City
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <ContactPhoneIcon />
+                    <Typography gutterBottom variant="h6" component="div">
+                      Phone:
+                    </Typography>
+                    <Typography variant="h6" className="text-muted">
+                      {store.managers.number}
+                    </Typography>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Box>
+          <Box mt={2} mb={2} sx={{ width: "50%" }}>
+            <Grid container spacing={0}>
+              <Card
+                sx={{
+                  position: "relative",
+                  py: 2,
+                  flex: "1 1 20%",
+                }}
+              >
+                <CardContent>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <EmailIcon />
+
+                    <Typography gutterBottom variant="h6" component="div">
+                      Total Products:
+                    </Typography>
+                    <Typography variant="h6" className="text-muted">
+                      4
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <LocationCityIcon />
+                    <Typography gutterBottom variant="h6" component="div">
+                      Total Orders:
+                    </Typography>
+                    <Typography variant="h6" className="text-muted">
+                      5
+                    </Typography>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Box>
+        </div>
+      </Box>
+
+      <Box
+        pt={2}
+        px={2}
+        lineHeight={1.25}
+        style={{
+          borderRadius: 5,
+          marginLeft: 10,
+          marginRight: 11,
+        }}
+      >
+        <Typography variant="h6" fontWeight="medium">
+          Products listed by the store:
+        </Typography>
+      </Box>
+      <div
+        style={{
+          marginLeft: 10,
+          marginRight: 11,
+          flexWrap: "wrap",
+          display: "flex",
+          flexDirection: "row",
+          // borderRadius: 5,
+        }}
+      >
+        <Box
+          // display="flex"
+          borderRadius="16px"
+          width="30%"
+          height="100%"
+          marginRight={3}
+          paddingBottom={1}
+        >
+          <Card
+            sx={{
+              maxWidth: 245,
+              margin: "10px",
+              flex: "1 1 20%",
+              boxShadow: "1px 3px 1px #9E9E9E",
+            }}
+          >
+            <CardMedia
+              component="img"
+              height="140"
+              //image={`${baseURL}/${ele.path[0]}`}
+              alt="product image"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Black Panther
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Nike
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                PKR/- 42,000
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">View</Button>
+            </CardActions>
+          </Card>
         </Box>
-      </Modal> */}
-      <p> this is store details page</p>
+      </div>
     </div>
   );
 };

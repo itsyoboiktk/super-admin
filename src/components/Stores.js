@@ -15,7 +15,7 @@ import { baseURL } from "./request";
 
 const Stores = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = React.useState([]);
+  const [stores, setStores] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [id, setId] = React.useState("");
   const handleOpen = (_id) => {
@@ -24,21 +24,22 @@ const Stores = () => {
   };
   const handleClose = () => setOpen(false);
 
-  const deleteProduct = () => {
-    axios
-      .delete(`${baseURL}/product/delete/${id}`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        console.log("here", res);
-        setOpen(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  //backend pae delete store kae route liknae hain
+  // const deleteProduct = () => {
+  //   axios
+  //     .delete(`${baseURL}/product/delete/${id}`, {
+  //       headers: {
+  //         Authorization: localStorage.getItem("token"),
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log("here", res);
+  //       setOpen(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   const style = {
     position: "absolute",
     top: "50%",
@@ -54,13 +55,9 @@ const Stores = () => {
 
   React.useEffect(() => {
     axios
-      .get(`${baseURL}/product/display`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
+      .get(`${baseURL}/admin/stores/display`)
       .then((res) => {
-        setProducts(res.data);
+        setStores(res.data);
         console.log(res);
       })
       .catch((error) => {
@@ -74,24 +71,24 @@ const Stores = () => {
         <TextField label="Search" sx={{ width: "70%", marginTop: "2%" }} />
       </div>
       <div className="items">
-        {products.map((element, key) => {
+        {stores.map((element, key) => {
           return (
             <Card sx={{ maxWidth: 345, margin: "10px", flex: "1 1 20%" }}>
               <CardMedia
                 component="img"
                 height="210"
-                image={`${baseURL}/${element.path[0]}`}
+                image={`${baseURL}/${element.logo}`}
                 alt="product image"
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  {element.title}
+                  {element.companyName}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {element.brand}
+                  {element.bio}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {element.price}
+                  {element.address.city}
                 </Typography>
               </CardContent>
               <CardActions>
@@ -99,22 +96,13 @@ const Stores = () => {
                   size="small"
                   onClick={() =>
                     navigate("/storeDetail", {
-                      state: { product: element },
+                      state: { store: element },
                     })
                   }
                 >
                   View
                 </Button>
-                <Button
-                  size="small"
-                  onClick={() =>
-                    navigate("/updateProduct", {
-                      state: { product: element },
-                    })
-                  }
-                >
-                  Edit
-                </Button>
+
                 <Button size="small" onClick={() => handleOpen(element._id)}>
                   Delete
                 </Button>
@@ -123,6 +111,7 @@ const Stores = () => {
           );
         })}
       </div>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -134,7 +123,7 @@ const Stores = () => {
             Are you sure you want to delete this item?
           </Typography>
           <div style={{ flexDirection: "row" }}>
-            <Button onClick={() => deleteProduct()}>Yes</Button>
+            <Button>Yes</Button>
             <Button onClick={() => handleClose()}>No</Button>
           </div>
         </Box>

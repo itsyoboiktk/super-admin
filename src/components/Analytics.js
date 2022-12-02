@@ -82,11 +82,11 @@ const Analytics = () => {
                 <Stack direction="row" spacing={5} sx={{ display: "flex" }}>
                   <PriceChangeIcon fontSize="large" />
                   <Typography inline variant="body1" align="right">
-                    Total Sales:
+                    Total Stores:
                   </Typography>
                 </Stack>
                 <Typography inline variant="h5" align="right">
-                  Rs. 45,000
+                  300
                 </Typography>
                 <Divider variant="middle" component="li" />
                 <Typography inline variant="body1" align="right">
@@ -121,11 +121,11 @@ const Analytics = () => {
 
               <CardContent>
                 <Typography inline variant="body1" align="right">
-                  Total Sales:
+                  Total Users:
                 </Typography>
 
                 <Typography inline variant="h5" align="right">
-                  Rs. 45,000
+                  500
                 </Typography>
                 <Divider variant="middle" component="li" />
                 <Typography inline variant="body1" align="right">
@@ -155,15 +155,15 @@ const Analytics = () => {
                 <Stack direction="row" spacing={9.5} sx={{ display: "flex" }}>
                   <PriceChangeIcon fontSize="large" />
                   <Typography inline variant="body1" align="right">
-                    Total Orders:
+                    Total Sales:
                   </Typography>
                 </Stack>
                 <Typography inline variant="h5" align="right">
-                  500
+                  Rs. 500,000
                 </Typography>
                 <Divider variant="middle" component="li" />
                 <Typography inline variant="body1" align="right">
-                  New Orders
+                  Update Now
                   <CachedIcon />
                 </Typography>
               </CardContent>
@@ -189,7 +189,7 @@ const Analytics = () => {
                 <Stack direction="row" spacing={4} sx={{ display: "flex" }}>
                   <PriceChangeIcon fontSize="large" />
                   <Typography inline variant="body1" align="right">
-                    Orders Returned:
+                    Reported Stores:
                   </Typography>
                 </Stack>
                 <Typography inline variant="h5" align="right">
@@ -197,7 +197,7 @@ const Analytics = () => {
                 </Typography>
                 <Divider variant="middle" component="li" />
                 <Typography inline variant="body1" align="right">
-                  New Orders
+                  Update Now
                   <CachedIcon />
                 </Typography>
               </CardContent>

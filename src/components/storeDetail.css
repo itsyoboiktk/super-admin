@@ -37,3 +37,21 @@
     margin-top: 10px;
     
 }
+
+.card{
+    border: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 20%;
+    background-color: #f8f9fa;
+    justify-items: end;
+}
+
+.page{
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    padding-left: 2%;
+    padding-right: 2%;
+}
