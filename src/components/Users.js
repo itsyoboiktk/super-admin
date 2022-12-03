@@ -5,7 +5,13 @@ import Card from "@mui/material/Card";
 import PropTypes from "prop-types";
 import React from "react";
 import { useTheme, styled } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
+import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
+import LocationCityIcon from "@mui/icons-material/LocationCity";
+import SignpostIcon from "@mui/icons-material/Signpost";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EmailIcon from "@mui/icons-material/Email";
+import Avatar from "@mui/material/Avatar";
 import {
   TableContainer,
   Table,
@@ -14,12 +20,13 @@ import {
   TableRow,
   TableFooter,
   Typography,
-  CardMedia,
-  CardContent,
+  Divider,
+  Grid,
+  Paper,
+  Button,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 
 import TablePagination from "@mui/material/TablePagination";
 import axios from "axios";
@@ -105,16 +112,12 @@ function UserTable() {
   const [ordersD, setOrdersD] = React.useState([]);
   const [orderID, setOrderID] = React.useState();
   const [address, setAddress] = React.useState({});
-  const [open2, setOpen2] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-  const handleOpen2 = (val, idO) => {
-    setOrdersD(val.items);
-    setAddress(val.address);
-    setOrderID(idO);
-    setOpen2(true);
+  const handleOpen = () => {
+    setOpen(true);
   };
-
-  const handleClose2 = () => setOpen2(false);
+  const handleClose = () => setOpen(false);
 
   //backend pae banana hai users ka sara display ka data
 
@@ -128,7 +131,7 @@ function UserTable() {
       .catch((error) => {
         console.log(error);
       });
-  }, [open2]);
+  }, [open]);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -176,95 +179,94 @@ function UserTable() {
         flexDirection: "row",
       }}
     >
-      {/* <Modal
-        open={open2}
-        onClose={handleClose2}
+      <Modal
+        open={open}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography variant="h6" color="text.primary" textAlign="center">
-            Order Detail
-          </Typography>
-          {ordersD.map((ele) => (
-            <Card
-              sx={{
-                minWidth: "100%",
-                maxWidth: "100%",
-                height: 120,
-                display: "flex",
-                flexDirection: "row",
-                marginTop: 2,
-                marginBottom: 2,
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={`${baseURL}/${ele.productId.path[0]}`}
-                alt="product image"
-                sx={{
-                  height: 120,
-                  width: 80,
-                  objectFit: "cover",
-                }}
-              />
-              <CardContent>
-                <Typography variant="h6" component="div">
-                  {ele.productId.title}
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  {ele.productId.brand}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {"PKR. " + ele.productId.price}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Size: {ele.size}
-                </Typography>
-              </CardContent>
-            </Card>
-          ))}
+        <Box
+          sx={{
+            position: "absolute",
+            top: "55%",
+            left: "55%",
+            transform: "translate(-50%, -50%)",
+            width: "30%",
+            border: "1px solid",
+            borderRadius: "10px",
+          }}
+        >
+          <Paper style={{ overflow: "auto" }}>
+            <Grid container wrap="nowrap" style={{ overflow: "auto" }}>
+              <Grid justifyContent="center" item xs>
+                <Card
+                  sx={{
+                    position: "relative",
 
-          <Typography gutterBottom variant="body.2" component="div">
-            <LocationOnIcon />
-            {"House: " + address.house}
-          </Typography>
-          <Typography
-            gutterBottom
-            variant="body.2"
-            component="div"
-          ></Typography>
-          <Typography gutterBottom variant="body.2" component="div">
-            {"Street: " + address.street + ", " + address.sector}
-          </Typography>
-          <Typography gutterBottom variant="body.2" component="div">
-            {address.city}
-          </Typography>
+                    py: 2,
+                    px: 2,
+                    backgroundColor: "#f8f9fa",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Avatar sx={{ width: 100, height: 100 }}>DP</Avatar>
+                    <Typography sx={{ py: 1 }} variant="h5" fontWeight="medium">
+                      Azam
+                    </Typography>
 
-          <Typography
-            gutterBottom
-            variant="body.1"
-            component="div"
-            sx={{ fontWeight: "700" }}
-          >
-            {"Total:  Rs." + calTotal()}
-          </Typography>
-
-          <Button
-            onClick={() => updateStatus(orderID)}
-            variant="contained"
-            style={{
-              marginTop: 20,
-              backgroundColor: "green",
-              textTransform: "capitalize",
-              fontfamily:
-                "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
-            }}
-          >
-            Dispatch Order
-          </Button>
+                    <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      sx={{ display: "flex", alignItems: "center" }}
+                    >
+                      <EmailIcon />
+                      <Typography variant="h6" className="text-muted">
+                        testing@gmail.com
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      sx={{ display: "flex", alignItems: "center" }}
+                    >
+                      <ContactPhoneIcon />
+                      <Typography variant="h6" className="text-muted">
+                        "03486483117"
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      sx={{ display: "flex", alignItems: "center" }}
+                    >
+                      <SignpostIcon />
+                      <Typography variant="h6" className="text-muted">
+                        {/* {shop.address.house + " "} {shop.address.street + ", "}{" "}
+                        {shop.address.sector + " "} */}
+                        Mera Ghar
+                      </Typography>
+                    </Stack>
+                    <Typography gutterBottom variant="h6">
+                      <LocationOnIcon />
+                      {/* {shop.address.city} */}
+                      Islamabad
+                    </Typography>
+                  </div>
+                </Card>
+              </Grid>
+            </Grid>
+          </Paper>
         </Box>
-      </Modal> */}
+      </Modal>
       <Box
         sx={{
           m: 2,
@@ -277,6 +279,7 @@ function UserTable() {
         <Typography variant="h6" color="white">
           Users Management
         </Typography>
+        <Button onClick={() => handleOpen()}>Click me</Button>
       </Box>
       <TableContainer
         sx={{ maxHeight: 600, borderRadius: "10px", m: 2, mt: -1 }}
@@ -300,7 +303,7 @@ function UserTable() {
             ).map((ele) => (
               <StyledTableRow
                 key={ele.id}
-                onClick={() => handleOpen2(ele, ele._id)}
+                onClick={() => handleOpen()}
                 // align={column.align}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
@@ -340,7 +343,6 @@ function UserTable() {
         </Table>
       </TableContainer>
     </div>
-    // </Paper>
   );
 }
 

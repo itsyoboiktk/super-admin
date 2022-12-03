@@ -16,12 +16,74 @@ import EmailIcon from "@mui/icons-material/Email";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import axios from "axios";
 import { baseURL } from "./request";
 
 const StoreDetail = () => {
   const { state } = useLocation();
   const store = state.store;
+  const id = store._id;
+  const [manager, setManager] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [products, setProducts] = React.useState([]);
+  const [totalProduct, setTotalProduct] = React.useState("");
+  const [totalOrder, setTotalOrder] = React.useState("");
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+
+  React.useEffect(() => {
+    axios
+      .get(`${baseURL}/admin/storeManager/${id}`)
+      .then((res) => {
+        setManager(res.data.managers);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const managerId = manager._id;
+  console.log(managerId);
+
+  React.useEffect(() => {
+    axios
+      .get(`${baseURL}/admin/storeAddress/${id}`)
+      .then((res) => {
+        setAddress(res.data.address);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    axios
+      .get(`${baseURL}/admin/products/display/${id}`)
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    axios
+      .get(`${baseURL}/admin/totals/store/${managerId}`)
+      .then((res) => {
+        setTotalOrder(res.data.totalOrders);
+        setTotalProduct(res.data.totalProducts);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div className="page">
@@ -48,9 +110,9 @@ const StoreDetail = () => {
             <Typography variant="h5" fontWeight="medium">
               {store.companyName}
             </Typography>
-            <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+            <Divider variant="fullWidth" style={{ margin: "10px 0" }} />
             <Typography variant="h5" fontWeight="medium">
-              Store Bio
+              {store.bio}
             </Typography>
           </div>
         </Card>
@@ -72,13 +134,40 @@ const StoreDetail = () => {
                     spacing={1}
                     sx={{ display: "flex", alignItems: "center" }}
                   >
+                    <AccountCircleIcon />
+
+                    <Typography gutterBottom variant="h6" component="div">
+                      Manager Name:
+                    </Typography>
+                    <Typography variant="h6" className="text-muted">
+                      {manager.name}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
                     <EmailIcon />
 
                     <Typography gutterBottom variant="h6" component="div">
                       Email:
                     </Typography>
                     <Typography variant="h6" className="text-muted">
-                      testing@gmail.com
+                      {manager.email}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <ContactPhoneIcon />
+                    <Typography gutterBottom variant="h6" component="div">
+                      Phone:
+                    </Typography>
+                    <Typography variant="h6" className="text-muted">
+                      {manager.phone}
                     </Typography>
                   </Stack>
                   <Stack
@@ -91,7 +180,7 @@ const StoreDetail = () => {
                       Building:
                     </Typography>
                     <Typography variant="h6" className="text-muted">
-                      Testing Address
+                      {address.house}
                     </Typography>
                   </Stack>
                   <Stack
@@ -104,26 +193,13 @@ const StoreDetail = () => {
                       Street:
                     </Typography>
                     <Typography variant="h6" className="text-muted">
-                      Testing Address two
+                      {address.street} {"," + address.sector}
                     </Typography>
                   </Stack>
                   <Typography gutterBottom variant="h6">
                     <LocationOnIcon />
-                    Testing City
+                    {address.city}
                   </Typography>
-                  <Stack
-                    direction="row"
-                    spacing={1}
-                    sx={{ display: "flex", alignItems: "center" }}
-                  >
-                    <ContactPhoneIcon />
-                    <Typography gutterBottom variant="h6" component="div">
-                      Phone:
-                    </Typography>
-                    <Typography variant="h6" className="text-muted">
-                      {store.managers.number}
-                    </Typography>
-                  </Stack>
                 </CardContent>
               </Card>
             </Grid>
@@ -149,7 +225,7 @@ const StoreDetail = () => {
                       Total Products:
                     </Typography>
                     <Typography variant="h6" className="text-muted">
-                      4
+                      {totalProduct}
                     </Typography>
                   </Stack>
                   <Stack
@@ -162,7 +238,7 @@ const StoreDetail = () => {
                       Total Orders:
                     </Typography>
                     <Typography variant="h6" className="text-muted">
-                      5
+                      {totalOrder}
                     </Typography>
                   </Stack>
                 </CardContent>
@@ -196,44 +272,43 @@ const StoreDetail = () => {
           // borderRadius: 5,
         }}
       >
-        <Box
-          // display="flex"
-          borderRadius="16px"
-          width="30%"
-          height="100%"
-          marginRight={3}
-          paddingBottom={1}
-        >
-          <Card
-            sx={{
-              maxWidth: 245,
-              margin: "10px",
-              flex: "1 1 20%",
-              boxShadow: "1px 3px 1px #9E9E9E",
-            }}
+        {products.map((ele) => (
+          <Box
+            // display="flex"
+            borderRadius="16px"
+            width="30%"
+            height="100%"
+            marginRight={3}
+            paddingBottom={1}
           >
-            <CardMedia
-              component="img"
-              height="140"
-              //image={`${baseURL}/${ele.path[0]}`}
-              alt="product image"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Black Panther
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Nike
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                PKR/- 42,000
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">View</Button>
-            </CardActions>
-          </Card>
-        </Box>
+            <Card
+              sx={{
+                maxWidth: 245,
+                margin: "10px",
+                flex: "1 1 20%",
+                boxShadow: "1px 3px 1px #9E9E9E",
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="140"
+                image={`${baseURL}/${ele.path[0]}`}
+                alt="product image"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {ele.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {ele.brand}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  PKR/- {ele.price}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
+        ))}
       </div>
     </div>
   );

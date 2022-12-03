@@ -78,7 +78,7 @@ const Stores = () => {
                 component="img"
                 height="210"
                 image={`${baseURL}/${element.logo}`}
-                alt="product image"
+                alt="Store image"
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
