@@ -48,9 +48,6 @@ const StoreDetail = () => {
       });
   }, []);
 
-  const managerId = manager._id;
-  console.log(managerId);
-
   React.useEffect(() => {
     axios
       .get(`${baseURL}/admin/storeAddress/${id}`)
@@ -72,7 +69,8 @@ const StoreDetail = () => {
         console.log(error);
       });
   }, []);
-
+  const managerId = manager._id;
+  console.log(managerId);
   React.useEffect(() => {
     axios
       .get(`${baseURL}/admin/totals/store/${managerId}`)

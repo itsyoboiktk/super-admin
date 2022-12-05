@@ -29,6 +29,7 @@ const Analytics = () => {
 
   React.useEffect(() => {
     pieChart();
+    bars();
     axios
       .get(`${baseURL}/admin/totals`)
       .then((res) => {
@@ -42,28 +43,32 @@ const Analytics = () => {
       });
   }, []);
 
-  const [category, setCategory] = React.useState([
+  const [gender, setGender] = React.useState([
     { id: 1, gender: "Male", count: 5 },
     { id: 2, gender: "Female", count: 10 },
   ]);
   const [pieData, setPieData] = React.useState({
-    labels: category.map((element) => element.gender),
+    labels: gender.map((element) => element.gender),
     datasets: [
       {
         label: "Shoe Type",
-        data: category.map((element) => element.count),
-        backgroundColor: ["#B9D1D9", "#d1de85", "red"],
+        data: gender.map((element) => element.count),
+        backgroundColor: ["#B9D1D9", "#d1de85"],
       },
     ],
   });
-
+  const [category, setCategory] = React.useState([
+    { id: 1, category: "Sneaker", count: 1 },
+    { id: 2, category: "Formal", count: 2 },
+    { id: 3, category: "Sports", count: 2 },
+  ]);
   const [barData, setBarData] = React.useState({
-    labels: BarData.map((element) => element.month),
+    labels: category.map((element) => element.count),
     datasets: [
       {
-        label: "Sales per month",
-        data: BarData.map((element) => element.sales),
-        backgroundColor: ["#d1de85", "pink"],
+        label: "Shoes",
+        data: category.map((element) => element.count),
+        backgroundColor: ["#cbb9ed"],
       },
     ],
   });
@@ -83,6 +88,28 @@ const Analytics = () => {
           ],
         };
         setPieData(obj);
+      })
+
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const bars = () => {
+    axios
+      .get(`${baseURL}/admin/category`)
+      .then((res) => {
+        let obj = {
+          labels: category.map((element) => element.category),
+          datasets: [
+            {
+              label: "Shoes",
+              data: res.data.map((element) => element.count),
+              backgroundColor: ["#cbb9ed"],
+            },
+          ],
+        };
+        setBarData(obj);
       })
 
       .catch((e) => {
