@@ -77,7 +77,7 @@ const Stores = () => {
               <CardMedia
                 component="img"
                 height="210"
-                image={`${baseURL}/${element.logo}`}
+                //image={`${baseURL}/${element.logo}`}
                 alt="Store image"
               />
               <CardContent>
@@ -101,10 +101,6 @@ const Stores = () => {
                   }
                 >
                   View
-                </Button>
-
-                <Button size="small" onClick={() => handleOpen(element._id)}>
-                  Delete
                 </Button>
               </CardActions>
             </Card>

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-
-import PriceChangeIcon from "@mui/icons-material/PriceChange";
-import CachedIcon from "@mui/icons-material/Cached";
-
+import MenuCard from "../components/MenuCard";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import StoreTwoToneIcon from "@mui/icons-material/StoreTwoTone";
+import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
+import ShoppingBagTwoToneIcon from "@mui/icons-material/ShoppingBagTwoTone";
 import "./analytics.css";
 import BarChart from "./BarChart";
 import { BarData } from "../components/BarData";
@@ -21,23 +22,40 @@ import axios from "axios";
 import { baseURL } from "./request";
 
 const Analytics = () => {
-  const [totalPro, setTotalPro] = useState();
-  const [totalOrder, setTotalOrder] = useState();
+  const [totalProducts, setTotalProducts] = useState();
+  const [totalOrders, setTotalOrders] = useState();
+  const [totalStores, setTotalStores] = useState();
+  const [totalUsers, setTotalUsers] = useState();
+
   React.useEffect(() => {
+    pieChart();
     axios
-      .get(`${baseURL}/stats/totals`, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
+      .get(`${baseURL}/admin/totals`)
       .then((res) => {
-        setTotalOrder(res.data.totalOrders);
-        setTotalPro(res.data.totalProducts);
+        setTotalOrders(res.data.totalOrders);
+        setTotalProducts(res.data.totalProducts);
+        setTotalUsers(res.data.totalUsers);
+        setTotalStores(res.data.totalStores);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
+
+  const [category, setCategory] = React.useState([
+    { id: 1, gender: "Male", count: 5 },
+    { id: 2, gender: "Female", count: 10 },
+  ]);
+  const [pieData, setPieData] = React.useState({
+    labels: category.map((element) => element.gender),
+    datasets: [
+      {
+        label: "Shoe Type",
+        data: category.map((element) => element.count),
+        backgroundColor: ["#B9D1D9", "#d1de85", "red"],
+      },
+    ],
+  });
 
   const [barData, setBarData] = React.useState({
     labels: BarData.map((element) => element.month),
@@ -45,10 +63,32 @@ const Analytics = () => {
       {
         label: "Sales per month",
         data: BarData.map((element) => element.sales),
-        backgroundColor: ["#B9D1D9", "#d1de85"],
+        backgroundColor: ["#d1de85", "pink"],
       },
     ],
   });
+
+  const pieChart = () => {
+    axios
+      .get(`${baseURL}/admin/gender`)
+      .then((res) => {
+        let obj = {
+          labels: res.data.map((element) => element.gender),
+          datasets: [
+            {
+              label: "User",
+              data: res.data.map((element) => element.count),
+              backgroundColor: ["lightblue", "pink"],
+            },
+          ],
+        };
+        setPieData(obj);
+      })
+
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const style = {
     bgcolor: "background.paper",
@@ -58,158 +98,38 @@ const Analytics = () => {
   return (
     <div className="front">
       <Box sx={style}>
-        <Typography variant="h6" color="text.primary" textAlign="center">
-          Analytics (Iski Stlying karni hai)
-        </Typography>
         <div className="card">
-          <Card
-            sx={{
-              display: "flex",
-              width: 1 / 5,
-              marginRight: "6%",
-              border: "1px",
-              height: 170,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-              }}
-            >
-              <CardContent>
-                <Stack direction="row" spacing={5} sx={{ display: "flex" }}>
-                  <PriceChangeIcon fontSize="large" />
-                  <Typography inline variant="body1" align="right">
-                    Total Stores:
-                  </Typography>
-                </Stack>
-                <Typography inline variant="h5" align="right">
-                  300
-                </Typography>
-                <Divider variant="middle" component="li" />
-                <Typography inline variant="body1" align="right">
-                  Update Now
-                  <CachedIcon />
-                </Typography>
-              </CardContent>
-            </Box>
-          </Card>
-          <Card
-            sx={{
-              display: "flex",
-              width: 1 / 5,
-              marginRight: "6%",
-              border: "1px",
-              height: 170,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-              }}
-            >
-              <CardMedia
-                component="img"
-                sx={{ width: 100 }}
-                img="/src/components/assets/priceTag.png"
-                alt="Price Tag"
-              />
-
-              <CardContent>
-                <Typography inline variant="body1" align="right">
-                  Total Users:
-                </Typography>
-
-                <Typography inline variant="h5" align="right">
-                  500
-                </Typography>
-                <Divider variant="middle" component="li" />
-                <Typography inline variant="body1" align="right">
-                  Update Now
-                  <CachedIcon />
-                </Typography>
-              </CardContent>
-            </Box>
-          </Card>
-          <Card
-            sx={{
-              display: "flex",
-              width: 1 / 5,
-              border: "1px",
-              marginRight: "6%",
-              height: 170,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-              }}
-            >
-              <CardContent>
-                <Stack direction="row" spacing={9.5} sx={{ display: "flex" }}>
-                  <PriceChangeIcon fontSize="large" />
-                  <Typography inline variant="body1" align="right">
-                    Total Sales:
-                  </Typography>
-                </Stack>
-                <Typography inline variant="h5" align="right">
-                  Rs. 500,000
-                </Typography>
-                <Divider variant="middle" component="li" />
-                <Typography inline variant="body1" align="right">
-                  Update Now
-                  <CachedIcon />
-                </Typography>
-              </CardContent>
-            </Box>
-          </Card>
-          <Card
-            sx={{
-              display: "flex",
-              width: 1 / 5,
-              border: "1px",
-              marginRight: "1%",
-              height: 170,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-              }}
-            >
-              <CardContent>
-                <Stack direction="row" spacing={4} sx={{ display: "flex" }}>
-                  <PriceChangeIcon fontSize="large" />
-                  <Typography inline variant="body1" align="right">
-                    Reported Stores:
-                  </Typography>
-                </Stack>
-                <Typography inline variant="h5" align="right">
-                  4
-                </Typography>
-                <Divider variant="middle" component="li" />
-                <Typography inline variant="body1" align="right">
-                  Update Now
-                  <CachedIcon />
-                </Typography>
-              </CardContent>
-            </Box>
-          </Card>
+          <MenuCard
+            icon={<StoreTwoToneIcon fontSize="large" />}
+            option="Total Stores: "
+            num={totalStores}
+            color="#dbeaf1"
+          />
+          <MenuCard
+            icon={<ShoppingBagTwoToneIcon fontSize="large" />}
+            option={"Total Products: "}
+            num={totalProducts}
+            color="#e3f49a"
+          />
+          <MenuCard
+            icon={<LocalShippingTwoToneIcon fontSize="large" />}
+            option="Total Orders: "
+            num={totalOrders}
+            color="#ddd2ef"
+          />
+          <MenuCard
+            icon={<PeopleAltIcon fontSize="large" />}
+            option="Total Users: "
+            num={totalUsers}
+            color="#88b8f7"
+          />
         </div>
         <div className="charts">
           <div className="bar">
             <BarChart salesData={barData} />
           </div>
           <div className="pie">
-            <PieChart salesData={barData} />
+            <PieChart salesData={pieData} />
           </div>
         </div>
       </Box>

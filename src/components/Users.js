@@ -109,12 +109,13 @@ TablePaginationActions.propTypes = {
 
 function UserTable() {
   const [users, setUsers] = React.useState([]);
-  const [ordersD, setOrdersD] = React.useState([]);
-  const [orderID, setOrderID] = React.useState();
-  const [address, setAddress] = React.useState({});
+  const [userD, setUserD] = React.useState([]);
+  const [addressU, setAddress] = React.useState({});
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (val) => {
+    setUserD(val);
+    setAddress(val.address[0]);
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
@@ -192,7 +193,6 @@ function UserTable() {
             left: "55%",
             transform: "translate(-50%, -50%)",
             width: "30%",
-            border: "1px solid",
             borderRadius: "10px",
           }}
         >
@@ -202,12 +202,12 @@ function UserTable() {
                 <Card
                   sx={{
                     position: "relative",
-
                     py: 2,
                     px: 2,
                     backgroundColor: "#f8f9fa",
                     width: "100%",
                     height: "100%",
+                    borderRadius: "10px",
                   }}
                 >
                   <div
@@ -219,7 +219,7 @@ function UserTable() {
                   >
                     <Avatar sx={{ width: 100, height: 100 }}>DP</Avatar>
                     <Typography sx={{ py: 1 }} variant="h5" fontWeight="medium">
-                      Azam
+                      {userD.name}
                     </Typography>
 
                     <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
@@ -230,7 +230,7 @@ function UserTable() {
                     >
                       <EmailIcon />
                       <Typography variant="h6" className="text-muted">
-                        testing@gmail.com
+                        {userD.email}
                       </Typography>
                     </Stack>
                     <Stack
@@ -240,7 +240,7 @@ function UserTable() {
                     >
                       <ContactPhoneIcon />
                       <Typography variant="h6" className="text-muted">
-                        "03486483117"
+                        {userD.phone}
                       </Typography>
                     </Stack>
                     <Stack
@@ -250,15 +250,13 @@ function UserTable() {
                     >
                       <SignpostIcon />
                       <Typography variant="h6" className="text-muted">
-                        {/* {shop.address.house + " "} {shop.address.street + ", "}{" "}
-                        {shop.address.sector + " "} */}
-                        Mera Ghar
+                        {addressU.house + " "} {addressU.street + ", "}{" "}
+                        {addressU.sector + " "}
                       </Typography>
                     </Stack>
                     <Typography gutterBottom variant="h6">
                       <LocationOnIcon />
-                      {/* {shop.address.city} */}
-                      Islamabad
+                      {addressU.city}
                     </Typography>
                   </div>
                 </Card>
@@ -279,7 +277,6 @@ function UserTable() {
         <Typography variant="h6" color="white">
           Users Management
         </Typography>
-        <Button onClick={() => handleOpen()}>Click me</Button>
       </Box>
       <TableContainer
         sx={{ maxHeight: 600, borderRadius: "10px", m: 2, mt: -1 }}
@@ -300,19 +297,22 @@ function UserTable() {
                   page * rowsPerPage + rowsPerPage
                 )
               : users
-            ).map((ele) => (
-              <StyledTableRow
-                key={ele.id}
-                onClick={() => handleOpen()}
-                // align={column.align}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <StyledTableCell>{ele.name}</StyledTableCell>
-                <StyledTableCell>{ele.email}</StyledTableCell>
-                <StyledTableCell>{ele.phone}</StyledTableCell>
-                <StyledTableCell>{ele.age}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            )
+              // key={ele.id}
+              //   onClick={() => handleOpen2(ele, ele._id)}
+              .map((ele) => (
+                <StyledTableRow
+                  key={ele.id}
+                  onClick={() => handleOpen(ele)}
+                  // align={column.align}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <StyledTableCell>{ele.name}</StyledTableCell>
+                  <StyledTableCell>{ele.email}</StyledTableCell>
+                  <StyledTableCell>{ele.phone}</StyledTableCell>
+                  <StyledTableCell>{ele.age}</StyledTableCell>
+                </StyledTableRow>
+              ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 53 * emptyRows }}>
                 <TableCell colSpan={6} />

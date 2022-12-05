@@ -256,6 +256,7 @@ const StoreDetail = () => {
           borderRadius: 5,
           marginLeft: 10,
           marginRight: 11,
+          backgroundColor: "white",
         }}
       >
         <Typography variant="h6" fontWeight="medium">
@@ -269,6 +270,7 @@ const StoreDetail = () => {
           flexWrap: "wrap",
           display: "flex",
           flexDirection: "row",
+          backgroundColor: "white",
           // borderRadius: 5,
         }}
       >

@@ -14,6 +14,7 @@ const MenuCard = (props) => {
         cursor: "pointer",
         flex: "1 1 150px",
         margin: "10px",
+        padding: "10px",
         borderRadius: "10px",
         backgroundColor: props.color,
       }}
@@ -32,6 +33,7 @@ const MenuCard = (props) => {
             }}
           >
             {props.option}
+            {props.num}
           </Button>
         </CardActions>
       </CardContent>
