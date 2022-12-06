@@ -91,14 +91,12 @@ const Report = () => {
             >
               <CardMedia
                 component="img"
-                image={
-                  "/Users/nigarahmad/Desktop/Project/store-web/src/components/assets/priceTag.png"
-                }
+                image={`${baseURL}/${element.storeId.logo}`}
                 alt="product image"
                 sx={{
-                  height: 120,
-                  width: 80,
-                  objectFit: "cover",
+                  height: 150,
+                  width: 150,
+                  objectFit: "fill",
                 }}
               />
               <CardContent>
@@ -111,7 +109,7 @@ const Report = () => {
                 </Typography>
 
                 <Typography variant="body2" color="text.secondary">
-                  {element.userId.email} {element.userId.phone}
+                  {element.userId.email}, {element.userId.phone}
                 </Typography>
 
                 <Typography variant="body2">Report:</Typography>

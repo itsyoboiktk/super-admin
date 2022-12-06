@@ -51,9 +51,9 @@ const Analytics = () => {
     labels: gender.map((element) => element.gender),
     datasets: [
       {
-        label: "Shoe Type",
+        label: "Gender",
         data: gender.map((element) => element.count),
-        backgroundColor: ["#B9D1D9", "#d1de85"],
+        backgroundColor: ["lightblue", "pink"],
       },
     ],
   });
